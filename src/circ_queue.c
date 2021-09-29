@@ -36,12 +36,21 @@ void Queue_put(Queue* this, CANFrame val) {
     }
 }
 CANFrame Queue_get(Queue* this) {
-    CANFrame ret = this->_arr[this->_head];
-    _INC_HEAD(this);
-    if (!Queue_empty(this)) {
-        this->len -= 1;
+    if (this->len == 0) {
+        CANFrame ret = {
+            .id = 0xffffffff,
+            .pld = {0xff}
+        };
+        return ret;
     }
-    return ret;
+    else {
+        CANFrame ret = this->_arr[this->_head];
+        _INC_HEAD(this);
+        if (!Queue_empty(this)) {
+            this->len -= 1;
+        }
+        return ret;
+    }
 }
 
 void Queue_print(Queue* this) {
