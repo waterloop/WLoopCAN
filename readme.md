@@ -90,7 +90,7 @@ int main() {
     /* USER CODE BEGIN 2 */
 
     ////////////////////////////////////////////////////////////////////////////////////////////
-	if (CANBus_init(&hcan1) != HAL_OK) {
+    if (CANBus_init(&hcan1) != HAL_OK) {
     	printf("Error: failed to initialize CANBus...")
         Error_Handler();
     }
