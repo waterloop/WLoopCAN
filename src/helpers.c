@@ -10,4 +10,3 @@ uint32_t FLOAT_TO_UINT(float f) {
     temp.f = f;
     return temp.ui;
 }
-

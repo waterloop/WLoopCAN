@@ -69,7 +69,9 @@ HAL_StatusTypeDef CANBus_subscribe(Field field) {
     int8_t bank_num = -1;
     for (uint8_t i = 0; i < MAX_NUM_FILTER_BANKS; i++) {
         if (FILTER_BANK_MAP[i].filter_typedef.FilterActivation == CAN_FILTER_DISABLE) {
+        // if (FILTER_BANK_MAP[i].id == -1) {
             bank_num = i;
+            break;
         }
     }
 
@@ -89,8 +91,10 @@ HAL_StatusTypeDef CANBus_subscribe(Field field) {
         .FilterMaskIdHigh = (std_id << 5) | ( (ext_id >> 13) & 0b11111 ),
         .FilterIdLow = (ext_id & 0x1fff) << 3,
         .FilterMaskIdLow = (ext_id & 0x1fff) << 3,
-        .FilterMode = CAN_FILTERMODE_IDLIST,
+        // .FilterMode = CAN_FILTERMODE_IDLIST,
+        .FilterMode = CAN_FILTERMODE_IDMASK,
         .FilterScale = CAN_FILTERSCALE_32BIT,
+        .SlaveStartFilterBank = 14
     };
     int8_t status = HAL_CAN_ConfigFilter(&CAN_HANDLE, &filter);
 
@@ -129,7 +133,9 @@ HAL_StatusTypeDef CANBus_unsubscribe(Field field) {
 
 HAL_StatusTypeDef CANBus_put_frame(CANFrame* frame) {
     TX_HDR.ExtId = frame->id;
-    return HAL_CAN_AddTxMessage(&CAN_HANDLE, &TX_HDR, frame->pld, &TX_MAILBOX);
+    int8_t status = HAL_CAN_AddTxMessage(&CAN_HANDLE, &TX_HDR, frame->pld, &TX_MAILBOX);
+    while (HAL_CAN_IsTxMessagePending(&CAN_HANDLE, TX_MAILBOX)) { asm("NOP"); }
+    return status;
 }
 CANFrame CANBus_get_frame() {
     return Queue_get(&RX_QUEUE);
