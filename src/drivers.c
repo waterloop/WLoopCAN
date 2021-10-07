@@ -11,7 +11,8 @@ CAN_HandleTypeDef CAN_HANDLE;
 CAN_TxHeaderTypeDef TX_HDR = {
     .StdId = 0x0000,                // not used
     .ExtId = 0x00000000,            // write correct arb_id before a frame is sent
-    .IDE = CAN_ID_EXT,              // use extended ID
+    // .IDE = CAN_ID_EXT,
+    .IDE = CAN_ID_STD,              // use 11 bit IDs
     .RTR = CAN_RTR_DATA,            // send data frames
     .DLC = 8,                       // send 8-byte payloads
     .TransmitGlobalTime = DISABLE   // don't send timestamps
@@ -30,7 +31,8 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan) {
     if (HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &RX_HDR, RX_BUFF) != HAL_OK) {
         Error_Handler();
     }
-    CANFrame rx_frame = CANFrame_init(RX_HDR.ExtId);
+    // CANFrame rx_frame = CANFrame_init(RX_HDR.ExtId);
+    CANFrame rx_frame = CANFrame_init(RX_HDR.StdId);
     for (uint8_t i = 0; i < 8; i++) {
         rx_frame.pld[i] = RX_BUFF[i];
     }
@@ -51,14 +53,10 @@ HAL_StatusTypeDef CANBus_init(CAN_HandleTypeDef* hcan) {
 
     // start the CAN peripheral
     int8_t status;
-    status = HAL_CAN_Start(hcan);
+    status = HAL_CAN_Start(&CAN_HANDLE);
     if (status != HAL_OK) { return status; }
     
-    status = HAL_CAN_ActivateNotification(hcan, CAN_IT_RX_FIFO0_MSG_PENDING);
-    if (status != HAL_OK) { return status; }
-
-    // subscribe to the pod state msg
-    status = CANBus_subscribe(STATE_ID);
+    status = HAL_CAN_ActivateNotification(&CAN_HANDLE, CAN_IT_RX_FIFO0_MSG_PENDING);
     if (status != HAL_OK) { return status; }
 
     return HAL_OK;
@@ -69,7 +67,6 @@ HAL_StatusTypeDef CANBus_subscribe(Field field) {
     int8_t bank_num = -1;
     for (uint8_t i = 0; i < MAX_NUM_FILTER_BANKS; i++) {
         if (FILTER_BANK_MAP[i].filter_typedef.FilterActivation == CAN_FILTER_DISABLE) {
-        // if (FILTER_BANK_MAP[i].id == -1) {
             bank_num = i;
             break;
         }
@@ -80,21 +77,22 @@ HAL_StatusTypeDef CANBus_subscribe(Field field) {
         return HAL_ERROR;
     }
 
-    uint16_t std_id = field.id & 0x7FF;
-    uint32_t ext_id = (field.id >> 11) & 0x1ffff;
+    uint16_t std_id = field.id & 0x7ff;
 
     CAN_FilterTypeDef filter = {
         .FilterActivation = CAN_FILTER_ENABLE,
         .FilterBank = bank_num,
         .FilterFIFOAssignment = CAN_RX_FIFO0,
-        .FilterIdHigh = (std_id << 5) | ( (ext_id >> 13) & 0b11111 ),
-        .FilterMaskIdHigh = (std_id << 5) | ( (ext_id >> 13) & 0b11111 ),
-        .FilterIdLow = (ext_id & 0x1fff) << 3,
-        .FilterMaskIdLow = (ext_id & 0x1fff) << 3,
-        // .FilterMode = CAN_FILTERMODE_IDLIST,
+        .SlaveStartFilterBank = MAX_NUM_FILTER_BANKS - 1,
+
         .FilterMode = CAN_FILTERMODE_IDMASK,
         .FilterScale = CAN_FILTERSCALE_32BIT,
-        .SlaveStartFilterBank = 14
+
+        .FilterIdHigh = std_id << 5,
+        .FilterIdLow = 0,
+
+        .FilterMaskIdHigh = 0xffff << 5,
+        .FilterMaskIdLow = 0
     };
     int8_t status = HAL_CAN_ConfigFilter(&CAN_HANDLE, &filter);
 
@@ -132,7 +130,9 @@ HAL_StatusTypeDef CANBus_unsubscribe(Field field) {
 }
 
 HAL_StatusTypeDef CANBus_put_frame(CANFrame* frame) {
-    TX_HDR.ExtId = frame->id;
+    // TX_HDR.ExtId = frame->id;
+    TX_HDR.StdId = frame->id;
+
     int8_t status = HAL_CAN_AddTxMessage(&CAN_HANDLE, &TX_HDR, frame->pld, &TX_MAILBOX);
     while (HAL_CAN_IsTxMessagePending(&CAN_HANDLE, TX_MAILBOX)) { asm("NOP"); }
     return status;

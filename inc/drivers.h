@@ -22,7 +22,6 @@ extern uint8_t RX_BUFF[8];
 extern struct _filter_bank FILTER_BANK_MAP[MAX_NUM_FILTER_BANKS];
 ////////////////////////////////////////////////////////////////////////////////
 
-HAL_StatusTypeDef _CANBus_init_filters(CAN_HandleTypeDef* hcan);
 HAL_StatusTypeDef CANBus_init(CAN_HandleTypeDef* hcan);
 
 HAL_StatusTypeDef CANBus_subscribe(Field field);
