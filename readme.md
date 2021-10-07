@@ -88,43 +88,26 @@ int main();
 
 int main() {
     /* USER CODE BEGIN 2 */
+    if ( CANBus_init(&hcan1) != HAL_OK) { Error_Handler(); }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    if (CANBus_init(&hcan1) != HAL_OK) {
-    	printf("Error: failed to initialize CANBus...")
-        Error_Handler();
-    }
-    CANBus_subscribe(BATTERY_PACK_CURRENT);	// subscribe to receive battery pack current data
-    ////////////////////////////////////////////////////////////////////////////////////////////
+    if (CANBus_subscribe(BATTERY_PACK_CURRENT) != HAL_OK) { Error_Handler(); };
 
-    /*
-    NOTE:
-        - Received frames are put into a queue in ISR. It is the responsibility
-          of the user to ensure that the queue doesn't overflow (in which case,
-          the last entry in the queue will be overwritten)
-    */
-
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    // send a frame containing the fields BATTERY_PACK_CURRENT and CELL_TEMPERATURE
     CANFrame tx_frame = CANFrame_init(BATTERY_PACK_CURRENT.id);
     CANFrame_set_field(&tx_frame, BATTERY_PACK_CURRENT, FLOAT_TO_UINT(4.20));
     CANFrame_set_field(&tx_frame, CELL_TEMPERATURE, FLOAT_TO_UINT(69.420));
-    if (CANBus_put_frame(tx_frame) < 0) {
-        Error_Handler();
-    }
-    ////////////////////////////////////////////////////////////////////////////////////////////
 
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    // get a received frame from the sw queue
-    if (Queue_empty(&RX_QUEUE)) {
-        CANFrame rx_frame = CANBus_get_frame();
-        if (rx_frame.id == BATTERY_PACK_CURRENT.id) {
+    while (1) {
+        if (CANBus_put_frame(&tx_frame) != HAL_OK) { Error_Handler(); }
+        if (!Queue_empty(&RX_QUEUE)) {
+            CANFrame rx_frame = CANBus_get_frame();
+
             float batt_curr = UINT_TO_FLOAT(CANFrame_get_field(&rx_frame, BATTERY_PACK_CURRENT));
             float cell_temp = UINT_TO_FLOAT(CANFrame_get_field(&rx_frame, CELL_TEMPERATURE));
+
+            printf("batt_curr = %.4f\r\n", batt_curr);
+            printf("cell_temp = %.4f\r\n", cell_temp);
         }
     }
-    ////////////////////////////////////////////////////////////////////////////////////////////
-
     /* USER CODE END 2 */
 
     return 0;
