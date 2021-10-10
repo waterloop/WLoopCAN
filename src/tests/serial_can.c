@@ -1,6 +1,8 @@
+#include <stdio.h>
 #include "main.h"
 #include "can_frame.h"
 #include "drivers.h"
+#include "helpers.h"
 #include "tests/serial_can.h"
 
 void input(char* msg, char* input_buff) {
@@ -20,7 +22,7 @@ void CAN_test() {
     CANFrame_set_field(&tx_frame, BATTERY_PACK_CURRENT, FLOAT_TO_UINT(4.20));
     CANFrame_set_field(&tx_frame, CELL_TEMPERATURE, FLOAT_TO_UINT(69.420));
 
-    HAL_Delay(5000);
+    HAL_Delay(1000);
     printf("starting test...\r\n");
     printf("\r\n");
     while (1) {
