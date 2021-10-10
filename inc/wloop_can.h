@@ -5,3 +5,8 @@
 #include "config.h"
 #include "drivers.h"
 #include "helpers.h"
+
+#ifdef DEBUG
+    #include "tests/serial_can.h"
+#endif
+

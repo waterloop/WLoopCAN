@@ -33,6 +33,9 @@ SZ = arm-none-eabi-size
 AR = arm-none-eabi-ar
 
 C_SOURCES = $(wildcard ./src/*.c)
+ifeq ($(DEBUG), true)
+	C_SOURCES += $(wildcard ./src/tests/*c)
+endif
 
 C_INCLUDES = \
 -I ./inc \
@@ -46,6 +49,10 @@ C_DEFS = \
 -D USE_HAL_DRIVER \
 -D $(DEVICE_VARIANT) \
 -D $(BOARD)
+
+ifeq ($(DEBUG), true)
+	-D += DEBUG
+endif
 
 MCU = $(CPU) -mthumb $(FPU) $(FLOAT-ABI)
 
@@ -71,8 +78,13 @@ $(BUILD_DIR)/%.o: ./src/%.c | $(BUILD_DIR)
 	$(CC) -c $(C_FLAGS) -Wa,-a,-ad,-alms=$(BUILD_DIR)/$(notdir $(<:.c=.lst)) $< -o $@
 	@echo ""
 
+$(BUILD_DIR)/%.o: ./src/tests/%.c | $(BUILD_DIR)
+	$(CC) -c $(C_FLAGS) -Wa,-a,-ad,-alms=$(BUILD_DIR)/$(notdir $(<:.c=.lst)) $< -o $@
+	@echo ""
+
 $(BUILD_DIR):
 	mkdir $@
+	@echo ""
 
 clean:
 	rm -rf $(BUILD_DIR)
