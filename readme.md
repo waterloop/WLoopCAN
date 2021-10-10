@@ -24,6 +24,10 @@ Afterwards, your project directory should resemble the following:
 |--|--makefile
 ```
 
+## .IOC CAN Configuration
+
+Refer to the settings in `.ioc-settings.txt`.
+
 ## Building
 
 ### STM32CubeIDE

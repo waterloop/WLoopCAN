@@ -1,0 +1,16 @@
+STM32F405RGTx:
+    - Bit Timings Parameter 
+        - Prescalar                         5
+        - Time Quanta in Bit Segment 1      13
+        - Time Quanta in Bit Segment 2      2
+        - ReSynchonization Jump Width       1
+    - Basic Parameters 
+        - Time Triggered Communication      Disable
+        - Automatic Bus-Off Management      Enable
+        - Automatic Wake-Up Mode            Enable
+        - Automatic Retransmission          Enable
+        - Receive Fifi Locked Mode          Disable
+        - Transmit Fifi Priority            Disable
+    - Advanced Parameters
+        - Operating Mode                    Normal
+
