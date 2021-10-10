@@ -1,5 +1,7 @@
 #pragma once
 
+#include "can_frame.h"
+
 #ifdef MASTER_BMS
 #include "stm32f4xx_hal.h"
 #endif
@@ -19,8 +21,6 @@
 
 #ifdef TEMP_SENSOR
 #endif
-
-#include "can_frame.h"
 
 /*
 Size of the Rx software fifo in bytes

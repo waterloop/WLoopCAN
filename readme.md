@@ -26,6 +26,22 @@ Afterwards, your project directory should resemble the following:
 
 ## Building
 
+### STM32CubeIDE
+
+Follow the following steps to setup the build:
+
+1. When opening the project, make sure to check "Search for nested projects".
+2. Open a file under the `WLoopCAN` directory
+3. Under `Project -> Properties`, click on `C/C++ Build` 
+4. Under `MCU Settings`, select the correct MCU and configure the settings (should be fairly straight forward)
+5. Under `MCU GCC Compiler -> Preprocessor`, define the name of your board (the default is `MASTER_BMS`, a list of names can be found in `inc/config.h`)
+6. Under `MCU GCC Compiler -> Include Paths`, correct the include paths for your MCU (default is for `STM32F405RGTx`)
+7. Hit `Apply and Close`
+
+Finally, you can build by clicking the hammer button in the top let.
+
+### GNU Make
+
 **Dependencies**
 
 * `arm-none-eabi-gcc`
@@ -58,17 +74,18 @@ make
 
 ## Linking With STM32 Project
 
+### STM32CubeIDE
+
+Follow the following instructions:
+
+1. Open the `Project -> Properties` menu, then open `C/C++ Build -> Settings`
+2. Under `MCU GCC Compiler -> Include Paths`, add `../../WLoopCAN/inc`
+3. Under `MCU GCC Compiler -> Preprocessor` add the name of your board (a list of names can be found in `inc/config.h`)
+4. Under `MCU GCC Linker -> Miscellaneous` add `../../WLoopCAN/Debug/wloop_can.a` to additional object files
+
 ### GNU Make
 
 Link `./WLoopCAN/bin/wloop_can.a` with the rest of your object files, and add `-I ./WLoopCAN/inc` to your compilation flags.
-
-### STM32CubeIDE
-
-Open the `Project/Properties` menu, then open `C/C++ Build/Settings`.
-
-Under `MCU GCC Compiler`, add `../../WLoopCAN/inc` to the include paths.
-
-Under `MCU GCC Linker/Miscellaneous` add `../../WLoopCAN/bin/wloop_can.a` to additional object files.
 
 ## Usage
 

@@ -47,13 +47,9 @@ C_DEFS = \
 -D $(DEVICE_VARIANT) \
 -D $(BOARD)
 
-ifeq ($(DEBUG), true)
-	C_DEFS += -D DEBUG_WLOOP_CAN
-endif
-
 MCU = $(CPU) -mthumb $(FPU) $(FLOAT-ABI)
 
-C_FLAGS = $(C_INCLUDES) $(C_DEFS) $(MCU) $(OPT) -Wall -MMD -MP -MF"$(@:%.o=%.d)"
+C_FLAGS = $(C_INCLUDES) $(C_DEFS) $(MCU) $(OPT) -ffunction-sections -fdata-sections -Wall -MMD -MP -MF"$(@:%.o=%.d)"
 
 ifeq ($(DEBUG), true)
 	C_FLAGS += -ggdb
