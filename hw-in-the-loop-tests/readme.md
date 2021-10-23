@@ -2,6 +2,8 @@
 
 A collection of hw-in-the-loop tests. Requires `socket-can`.
 
+View test plans [here](https://docs.google.com/document/d/1AHJ6yhIJS4nzz4EUkz22zf57LdoAZyPuRv5f0PJLo0M/edit#heading=h.gjqmn3j6xkwx).
+
 **How to Install and Run on the Rapsberry Pi:**
 
 ```bash
