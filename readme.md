@@ -89,7 +89,11 @@ Follow the following instructions:
 
 ### GNU Make
 
-Link `./WLoopCAN/bin/wloop_can.a` with the rest of your object files, and add `-I ./WLoopCAN/inc` to your compilation flags.
+Follow the following instructions:
+
+1. Add `-I ./WLoopCAN/inc` to your compilation flags
+2. Add `-D <board_name>` to your compilation flags (a list of names can be found in `inc/config.h`)
+3. Link `./WLoopCAN/bin/wloop_can.a` with the rest of your object files
 
 ## Usage
 
