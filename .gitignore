@@ -1,3 +1,21 @@
+*/bin/
 bin/
+
+*/build/
 build/
-/Debug/
+
+*/Debug/
+Debug/
+
+*/env/
+env/
+
+*/venv/
+venv/
+
+__pycache__
+
+# macos lol
+*/.DS_Store
+.DS_Store
+
