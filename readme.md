@@ -7,7 +7,7 @@ A minimal implementation of a CAN library for G5. Handles sending and receiving 
 ```bash
 cd /path/to/stm32_project
 git submodule add "https://github.com/waterloop/WLoopCAN.git"
-git submodule update --init --recursive
+git submodule update --init --recursive --remote
 ```
 
 Afterwards, your project directory should resemble the following:
