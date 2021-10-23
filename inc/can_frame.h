@@ -3,6 +3,23 @@
 #include <stdint.h>
 #include <stddef.h>
 
+
+//////////////////////////////////////////////////////////////////////////
+typedef enum {
+    RESTING,
+    LV_READY,
+    ARMED,
+    AUTO_PILOT,
+    BRAKING,
+    EMERGENCY_BRAKE,
+    SYSTEM_FAILURE,
+    MANUAL_OPERATION_WAITING,
+    ACCELERATING,
+    AT_SPEED,
+    DECELERATING
+} StateID;
+//////////////////////////////////////////////////////////////////////////
+
 //////////////////////////////////////////////////////////////////////////
 typedef struct {
     uint32_t id;        // arbitration id of field
