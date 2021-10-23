@@ -24,6 +24,6 @@ source ./env/bin/activate
 pip3 install -r requirements.txt
 
 # run test script
-python3 <testname>.py --channel=can0
+python3 <testname>.py --interface=can0
 ```
 
