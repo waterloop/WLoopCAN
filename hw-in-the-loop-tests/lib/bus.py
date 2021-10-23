@@ -10,7 +10,7 @@ _BUSTYPE = "socketcan"
 def _monitor_bus(bus_obj: CANBus):
     b = bus_obj._get_bus()
     while (1):
-        for msg in bus:
+        for msg in b:
             frame = CANFrame(arb_id = msg.id, payload = msg.data)
 
             # TODO: replace with python-can timestamps if
