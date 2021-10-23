@@ -36,7 +36,7 @@ Follow the following steps to setup the build:
 
 1. When opening the project, make sure to check "Search for nested projects".
 2. Open a file under the `WLoopCAN` directory
-3. Under `Project -> Properties`, click on `C/C++ Build` 
+3. Under `Project -> Properties`, click on `C/C++ Build -> Settings` 
 4. Under `MCU Settings`, select the correct MCU and configure the settings (should be fairly straight forward)
 5. Under `MCU GCC Compiler -> Preprocessor`, define the name of your board (the default is `MASTER_BMS`, a list of names can be found in `inc/config.h`)
 6. Under `MCU GCC Compiler -> Include Paths`, correct the include paths for your MCU (default is for `STM32F405RGTx`)
