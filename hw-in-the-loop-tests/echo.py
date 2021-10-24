@@ -1,9 +1,12 @@
+import csv
 import sys
+import time
 import click
 from lib import CANBus, CANFrame
 
 def on_rx(frame, timestamp):
-    print(f"received {frame.to_dict()} at {str(timestamp)}\n")
+    frame_dict = frame.to_dict()
+    print(f"received {frame_dict} at {str(timestamp)}\n")
 
 @click.command()
 @click.option("--interface", help = "ex. can0", required = True)
@@ -12,12 +15,21 @@ def echo(interface):
     bus.set_rx_callback(on_rx)
 
     while (1):
-        # user input
-        id_ = int(input("enter id: "), 16)
-        pld = [int(i, 16) for i in input("enter payload: ").split(" ")]
+        try:
+            # user input
+            id_ = int(input("enter id: "), 16)
+            pld = [int(i, 16) for i in input("enter payload: ").split(" ")]
+            print()
 
-        frame = CANFrame(arb_id = id_, payload = pld)
-        bus.put_frame(frame)
+            # send frame
+            frame = CANFrame(arb_id = id_, payload = pld)
+            bus.put_frame(frame)
+
+            time.sleep(0.5)
+
+        except ValueError:
+            print("Error: inavlid input\n")
+
 
 if __name__ == "__main__":
     try:

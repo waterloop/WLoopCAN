@@ -6,4 +6,3 @@ sys.path.append(_THIS_DIR)
 
 from bus import *
 from frame import *
-

@@ -6,9 +6,8 @@ class CANFrame():
     payload: list
 
     def to_dict(self):
-        ret = {
-            "id": self.arb_id,
-            "payload": self.payload
+        return {
+            "arb_id": int("{:03x}".format(self.arb_id)),
+            "payload": [int("{:02x}".format(i)) for i in self.payload]
         }
-        return ret
 
