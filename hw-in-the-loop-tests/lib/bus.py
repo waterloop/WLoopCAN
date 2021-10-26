@@ -18,7 +18,7 @@ def _monitor_bus(bus_obj: CANBus):
             #       this isn't goot enough
             dt_now = datetime.now()
 
-            bus_obj._log_file.write(f"[{datetime.now()}]: {frame.to_dict}")
+            bus_obj._log_file.write(f"[{datetime.now()}]: {frame.to_dict()}")
             bus_obj._rx_callback(frame, datetime.now())
 
 class CANBus():
