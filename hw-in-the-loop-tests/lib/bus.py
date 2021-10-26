@@ -31,7 +31,7 @@ class CANBus():
         self._monitor_bus_thread.start()
 
     def __enter__(self):
-        self._log_file = open(f"tmp/{sys.argv[0].split('.')[0]}-{datetime.now().date()}.txt", 'a')
+        self._log_file = open(f"/tmp/{sys.argv[0].split('.')[0]}-{datetime.now().date()}.txt", 'a')
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
