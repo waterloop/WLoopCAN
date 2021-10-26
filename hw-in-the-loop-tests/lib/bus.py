@@ -1,7 +1,7 @@
 from __future__ import annotations
 import can
 import threading
-import os
+import sys
 from typing import Callable
 from datetime import datetime
 from frame import CANFrame
@@ -16,12 +16,13 @@ def _monitor_bus(bus_obj: CANBus):
 
             # TODO: replace with python-can timestamps if
             #       this isn't goot enough
+            dt_now = datetime.now()
+
             bus_obj._log_file.write(f"[{datetime.now()}]: {frame.to_dict}")
             bus_obj._rx_callback(frame, datetime.now())
 
 class CANBus():
     def __init__(self, interface):
-        self._log_file = open(f"hw-in-the-loop-tests/bus_logging.txt", 'a')
         self._rx_callback = lambda *args: None
         self._bus = can.ThreadSafeBus(channel = interface, bustype = _BUSTYPE)
         self._monitor_bus_thread = threading.Thread(
@@ -29,7 +30,11 @@ class CANBus():
 
         self._monitor_bus_thread.start()
 
-    def __del__(self):
+    def __enter__(self):
+        self._log_file = open(f"tmp/{sys.argv[0].split('.')[0]}-{datetime.now().date()}.txt", 'a')
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
         self._log_file.close()
 
     def put_frame(self, frame: CANFrame):

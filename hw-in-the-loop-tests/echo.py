@@ -11,24 +11,24 @@ def on_rx(frame, timestamp):
 @click.command()
 @click.option("--interface", help = "ex. can0", required = True)
 def echo(interface):
-    bus = CANBus(interface)
-    bus.set_rx_callback(on_rx)
+    with CANBus(interface) as bus:
+        bus.set_rx_callback(on_rx)
 
-    while (1):
-        try:
-            # user input
-            id_ = int(input("enter id: "), 16)
-            pld = [int(i, 16) for i in input("enter payload: ").split(" ")]
-            print()
+        while (1):
+            try:
+                # user input
+                id_ = int(input("enter id: "), 16)
+                pld = [int(i, 16) for i in input("enter payload: ").split(" ")]
+                print()
 
-            # send frame
-            frame = CANFrame(arb_id = id_, payload = pld)
-            bus.put_frame(frame)
+                # send frame
+                frame = CANFrame(arb_id = id_, payload = pld)
+                bus.put_frame(frame)
 
-            time.sleep(0.5)
+                time.sleep(0.5)
 
-        except ValueError:
-            print("Error: inavlid input\n")
+            except ValueError:
+                print("Error: inavlid input\n")
 
 
 if __name__ == "__main__":
