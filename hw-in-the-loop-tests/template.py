@@ -8,8 +8,8 @@ def on_rx(frame, timestamp):
 @click.command()
 @click.option("--interface", help = "ex. can0", required = True)
 def script_name(interface):
-    bus = CANBus(interface)
-    bus.set_rx_callback(on_rx)
+    with CANBus(interface) as bus:
+        bus.set_rx_callback(on_rx)
 
 
 if __name__ == "__main__":
