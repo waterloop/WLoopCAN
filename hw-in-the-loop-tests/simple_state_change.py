@@ -11,8 +11,9 @@ LV_READY_STATE = 0x01
 
 def watch_acks_on_rx(state_acks):
     def on_rx(frame, timestamp):
-        if frame.arb_id == BMS_STATE_CHANGE_COMMAND and frame.payload[0] == LV_READY_STATE:
-            state_acks[0] = True
+        if frame.arb_id == BMS_STATE_CHANGE_COMMAND:
+            if frame.payload[0] == LV_READY_STATE:
+                state_acks[0] = True
     return on_rx
 
 @click.command()
@@ -25,7 +26,7 @@ def script_name(interface):
         frame = CANFrame(CONTROLLER_COMMAND, LV_READY_STATE)
         bus.put_frame(frame)
 
-        print("Waiting for state machine", end="")
+        print("Waiting for state machine")
         while not state_acks[0]:
             pass     
 
