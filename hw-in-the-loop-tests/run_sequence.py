@@ -15,7 +15,7 @@ def state_change(bus, waiting_state, target_state):
     waiting_state["state"] = target_state
     waiting_state["ack"] = False
 
-    frame = CANFrame(ARBITRATION_IDS["CONTROLLER_COMMAND"], target_state)
+    frame = CANFrame(ARBITRATION_IDS["CONTROLLER_COMMAND"], [target_state])
     bus.put_frame(frame)
 
     print(f"Waiting for transition from {initial_state} to {target_state}")
