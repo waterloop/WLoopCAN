@@ -2,17 +2,10 @@ import sys
 import click
 from lib import CANBus, CANFrame, ARBITRATION_IDS, STATE_IDS
 
-CONTROLLER_COMMAND = ARBITRATION_IDS["CONTROLLER_COMMAND"]
-BMS_STATE_CHANGE_COMMAND = ARBITRATION_IDS["BMS_STATE_CHANGE"]
-MC_STATE_CHANGE_COMMAND = ARBITRATION_IDS["MC_STATE_CHANGE"]
-
-LV_READY_STATE = STATE_IDS["STATE_ID"]
-
-
 def watch_acks_on_rx(state_acks):
     def on_rx(frame, timestamp):
-        if frame.arb_id == BMS_STATE_CHANGE_COMMAND:
-            if frame.payload[0] == LV_READY_STATE:
+        if frame.arb_id == ARBITRATION_IDS["BMS_STATE_CHANGE"]:
+            if frame.payload[0] == STATE_IDS["LV_READY"]:
                 state_acks[0] = True
     return on_rx
 
@@ -23,7 +16,7 @@ def simple_state_change(interface):
         state_acks = [False]
         bus.set_rx_callback(watch_acks_on_rx(state_acks))
 
-        frame = CANFrame(CONTROLLER_COMMAND, LV_READY_STATE)
+        frame = CANFrame(ARBITRATION_IDS["CONTROLLER_COMMAND"], STATE_IDS["LV_READY"])
         bus.put_frame(frame)
 
         print("Waiting for state machine")
