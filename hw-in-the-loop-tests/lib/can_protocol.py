@@ -20,3 +20,9 @@ STATE_IDS = {
     "INVALID": 0x0b,
     "NACK": 0xff
 }
+
+def get_state_name(state_id: int):
+    for k in STATE_IDS:
+        if STATE_IDS[k] == state_id:
+            return k
+    return "INVALID"

@@ -1,6 +1,6 @@
 import sys
 import click
-from lib import CANBus, CANFrame, ARBITRATION_IDS, STATE_IDS
+from lib import CANBus, CANFrame, ARBITRATION_IDS, STATE_IDS, get_state_name
 
 def watch_acks_on_rx(waiting_state):
     def on_rx(frame, timestamp):
@@ -18,7 +18,7 @@ def state_change(bus, waiting_state, target_state):
     frame = CANFrame(ARBITRATION_IDS["CONTROLLER_COMMAND"], [target_state])
     bus.put_frame(frame)
 
-    print(f"Waiting for transition from {initial_state} to {target_state}")
+    print(f"Waiting for transition from {get_state_name(initial_state)} to {get_state_name(target_state)}")
 
     while not waiting_state["ack"]:
         pass
