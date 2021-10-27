@@ -23,7 +23,7 @@ def state_change(bus, waiting_state, target_state):
     while not waiting_state["ack"]:
         pass
 
-    print(f"Transition to {target_state} success")
+    print(f"Transition to {get_state_name(target_state)} success")
 
 @click.command()
 @click.option("--interface", help = "ex. can0", required = True)
