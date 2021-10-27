@@ -1,6 +1,6 @@
 import sys
 import click
-from lib import CANBus, CANFrame, ARBITRATION_IDS, STATE_IDS
+from lib import CANBus, CANFrame, ARBITRATION_IDS, STATE_IDS, get_state_name
 
 def watch_acks_on_rx(waiting_state):
     def on_rx(frame, timestamp):
