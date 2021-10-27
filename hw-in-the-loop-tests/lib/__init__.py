@@ -6,3 +6,4 @@ sys.path.append(_THIS_DIR)
 
 from bus import *
 from frame import *
+from can_protocol import *

@@ -1,12 +1,12 @@
 import sys
 import click
-from lib import CANBus, CANFrame
+from lib import CANBus, CANFrame, ARBITRATION_IDS, STATE_IDS
 
-CONTROLLER_COMMAND = 0x00
-BMS_STATE_CHANGE_COMMAND = 0x0b
-MC_STATE_CHANGE_COMMAND = 0x15
+CONTROLLER_COMMAND = ARBITRATION_IDS["CONTROLLER_COMMAND"]
+BMS_STATE_CHANGE_COMMAND = ARBITRATION_IDS["BMS_STATE_CHANGE"]
+MC_STATE_CHANGE_COMMAND = ARBITRATION_IDS["MC_STATE_CHANGE"]
 
-LV_READY_STATE = 0x01
+LV_READY_STATE = STATE_IDS["STATE_ID"]
 
 
 def watch_acks_on_rx(state_acks):
@@ -18,7 +18,7 @@ def watch_acks_on_rx(state_acks):
 
 @click.command()
 @click.option("--interface", help = "ex. can0", required = True)
-def script_name(interface):
+def simple_state_change(interface):
     with CANBus(interface) as bus:
         state_acks = [False]
         bus.set_rx_callback(watch_acks_on_rx(state_acks))
@@ -35,7 +35,7 @@ def script_name(interface):
 
 if __name__ == "__main__":
     try:
-        script_name()
+        simple_state_change()
     except KeyboardInterrupt:
         sys.exit(0)
 
