@@ -4,8 +4,11 @@ from lib import CANBus, CANFrame, ARBITRATION_IDS, STATE_IDS
 
 def watch_acks_on_rx(state_acks):
     def on_rx(frame, timestamp):
+        print("FRAME RECEIVED")
         if frame.arb_id == ARBITRATION_IDS["BMS_STATE_CHANGE"]:
+            print("BMS")
             if frame.payload[0] == STATE_IDS["LV_READY"]:
+                print("LV")
                 state_acks[0] = True
     return on_rx
 
