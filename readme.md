@@ -34,7 +34,9 @@ Make sure that RX interrupts are enabled.
 
 ### STM32CubeIDE
 
-Follow the following steps to setup the build:
+Move the contents of `eclipse/<board_name>` into the root directory of this repo. Open the directory in STM32CubeIDE then it should build out of the box.
+
+Manual steps if the above doesn't work:
 
 1. When opening the project, make sure to check "Search for nested projects".
 2. Open a file under the `WLoopCAN` directory
