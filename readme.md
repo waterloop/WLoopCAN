@@ -26,7 +26,9 @@ Afterwards, your project directory should resemble the following:
 
 ## .IOC CAN Configuration
 
-Refer to the settings in `.ioc-settings.txt`.
+Refer to the settings in `.ioc-settings`.
+
+Make sure that RX interrupts are enabled.
 
 ## Building
 
