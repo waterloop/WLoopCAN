@@ -41,8 +41,9 @@ Follow the following steps to setup the build:
 3. Under `Project -> Properties`, click on `C/C++ Build -> Settings` 
 4. Under `MCU Settings`, select the correct MCU and configure the settings (should be fairly straight forward)
 5. Under `MCU GCC Compiler -> Preprocessor`, define the name of your board (the default is `MASTER_BMS`, a list of names can be found in `inc/config.h`)
-6. Under `MCU GCC Compiler -> Include Paths`, correct the include paths for your MCU (default is for `STM32F405RGTx`)
-7. Hit `Apply and Close`
+6. Under `MCU GCC Compiler -> Preprocessor`, define the name of your device family (default is `STM32F405xx`, refer to the makefiles if confused)
+7. Under `MCU GCC Compiler -> Include Paths`, correct the include paths for your MCU (default is for `STM32F405RGTx`)
+8. Hit `Apply and Close`
 
 Finally, you can build by clicking the hammer button in the top let.
 
