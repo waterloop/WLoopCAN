@@ -11,21 +11,25 @@
 #endif
 
 #ifdef RING_ENCODER
+#include "stm32f0xx_hal.h"
 #endif
 
 #ifdef PRESSURE_SENSOR
+#include "stm32f3xx_hal.h"
 #endif
 
 #ifdef LV_POWER
+#include "stm32f3xx_hal.h"
 #endif
 
 #ifdef TEMP_SENSOR
+#include "stm32f3xx_hal.h"
 #endif
 
 /*
 Size of the Rx software fifo in bytes
 */
-#define RX_BUFF_SIZE    100
+#define RX_BUFF_SIZE    20
 
 /*
 Number of CAN filter banks

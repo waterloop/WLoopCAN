@@ -12,32 +12,32 @@ void input(char* msg, char* input_buff) {
 }
 
 void CAN_test() {
-    if ( CANBus_init(&hcan1) != HAL_OK) { Error_Handler(); }
+//    if ( CANBus_init(&hcan1) != HAL_OK) { Error_Handler(); }
 
-    hcan1.Instance->MCR &= ~(1 << 16);
+//    hcan1.Instance->MCR &= ~(1 << 16);
 
-    if (CANBus_subscribe(BATTERY_PACK_CURRENT) != HAL_OK) { Error_Handler(); };
+//    if (CANBus_subscribe(BATTERY_PACK_CURRENT) != HAL_OK) { Error_Handler(); };
 
-    CANFrame tx_frame = CANFrame_init(BATTERY_PACK_CURRENT.id);
-    CANFrame_set_field(&tx_frame, BATTERY_PACK_CURRENT, FLOAT_TO_UINT(4.20));
-    CANFrame_set_field(&tx_frame, CELL_TEMPERATURE, FLOAT_TO_UINT(69.420));
-
-    HAL_Delay(1000);
-    printf("starting test...\r\n");
-    printf("\r\n");
-    while (1) {
-        {
-            char str[10];
-            input("Press enter to send a CAN Frame: ", str);
-        }
-        if (CANBus_put_frame(&tx_frame) != HAL_OK) { Error_Handler(); }
-        printf("CAN Frame has been sent...\r\n\r\n");
-
-        while (!Queue_empty(&RX_QUEUE)) {
-            printf("received frame : ");
-            CANFrame rx_frame = CANBus_get_frame();
-            CANFrame_print(&rx_frame);
-        }
+//    CANFrame tx_frame = CANFrame_init(BATTERY_PACK_CURRENT.id);
+//    CANFrame_set_field(&tx_frame, BATTERY_PACK_CURRENT, FLOAT_TO_UINT(4.20));
+//    CANFrame_set_field(&tx_frame, CELL_TEMPERATURE, FLOAT_TO_UINT(69.420));
+//
+//    HAL_Delay(1000);
+//    printf("starting test...\r\n");
+//    printf("\r\n");
+//    while (1) {
+//        {
+//            char str[10];
+//            input("Press enter to send a CAN Frame: ", str);
+//        }
+//        if (CANBus_put_frame(&tx_frame) != HAL_OK) { Error_Handler(); }
+//        printf("CAN Frame has been sent...\r\n\r\n");
+//
+//        while (!Queue_empty(&RX_QUEUE)) {
+//            printf("received frame : ");
+//            CANFrame rx_frame = CANBus_get_frame();
+//            CANFrame_print(&rx_frame);
+//        }
 
         // if (!Queue_empty(&RX_QUEUE)) {
         //     CANFrame rx_frame = CANBus_get_frame();
@@ -47,6 +47,6 @@ void CAN_test() {
         //     printf("cell_temp = %.4f\r\n", cell_temp);
         // }
         // HAL_Delay(500);
-    }
+//    }
 }
 
