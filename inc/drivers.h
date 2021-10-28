@@ -26,6 +26,7 @@ HAL_StatusTypeDef CANBus_init(CAN_HandleTypeDef* hcan);
 
 HAL_StatusTypeDef CANBus_subscribe(Field field);
 HAL_StatusTypeDef CANBus_unsubscribe(Field field);
+HAL_StatusTypeDef CANBus_subscribe_all();
 
 HAL_StatusTypeDef CANBus_put_frame(CANFrame* frame); 
 CANFrame CANBus_get_frame();

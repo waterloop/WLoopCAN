@@ -44,7 +44,6 @@ void CANFrame_print(CANFrame* this) {
     printf("%d]\r\n", this->pld[7]);
     printf("}\r\n");
 }
-
 //////////////////////////////////////////////////////////////////////////
 
 

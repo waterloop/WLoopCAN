@@ -55,7 +55,7 @@ HAL_StatusTypeDef CANBus_init(CAN_HandleTypeDef* hcan) {
     int8_t status;
     status = HAL_CAN_Start(&CAN_HANDLE);
     if (status != HAL_OK) { return status; }
-    
+
     status = HAL_CAN_ActivateNotification(&CAN_HANDLE, CAN_IT_RX_FIFO0_MSG_PENDING);
     if (status != HAL_OK) { return status; }
 
@@ -128,6 +128,44 @@ HAL_StatusTypeDef CANBus_unsubscribe(Field field) {
     }
     return status;
 }
+HAL_StatusTypeDef CANBus_subscribe_all() {
+    // find the first unused filter
+    int8_t bank_num = -1;
+    for (uint8_t i = 0; i < MAX_NUM_FILTER_BANKS; i++) {
+        if (FILTER_BANK_MAP[i].filter_typedef.FilterActivation == CAN_FILTER_DISABLE) {
+            bank_num = i;
+            break;
+        }
+    }
+
+    if (bank_num == -1) {
+        printf("Error: all filter banks are currently in use\r\n");
+        return HAL_ERROR;
+    }
+
+    CAN_FilterTypeDef filter = {
+        .FilterActivation = CAN_FILTER_ENABLE,
+        .FilterBank = bank_num,
+        .FilterFIFOAssignment = CAN_RX_FIFO0,
+        .SlaveStartFilterBank = MAX_NUM_FILTER_BANKS - 1,
+
+        .FilterMode = CAN_FILTERMODE_IDMASK,
+        .FilterScale = CAN_FILTERSCALE_32BIT,
+
+        .FilterIdHigh = 0,
+        .FilterIdLow = 0,
+        .FilterMaskIdHigh = 0,
+        .FilterMaskIdLow = 0
+    };
+    int8_t status = HAL_CAN_ConfigFilter(&CAN_HANDLE, &filter);
+
+    if (status == HAL_OK) {
+        FILTER_BANK_MAP[bank_num].filter_typedef = filter;
+        FILTER_BANK_MAP[bank_num].id = 0xffffffff;
+    }
+    return status;
+}
+
 
 HAL_StatusTypeDef CANBus_put_frame(CANFrame* frame) {
     // TX_HDR.ExtId = frame->id;
