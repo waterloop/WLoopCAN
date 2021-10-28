@@ -56,11 +56,11 @@ Finally, you can build by clicking the hammer button in the top let.
 * `arm-none-eabi-gcc`
 * `GNU Make`
 
-Build using the appropriate makefile.
+Build using the board name.
 
 ```bash
 # ex. for ring_encoder
-make -f ring_encoder.makefile
+make ring_encoder
 ```
 
 ## Linking With STM32 Project
