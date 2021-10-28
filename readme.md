@@ -51,29 +51,11 @@ Finally, you can build by clicking the hammer button in the top let.
 * `arm-none-eabi-gcc`
 * `GNU Make`
 
-The variables shown below need to be edited in `makefile`. The example below is for the G5 Master BMS.
-
-```makefile
-########################################################
-# USER DEFINED VARIABLES
-DEBUG = true
-
-BOARD = MASTER_BMS
-DEVICE = STM32F405RGTx
-DEVICE_VARIANT = STM32F405xx
-DEVICE_FAMILY = STM32F4xx
-
-CPU = -mcpu=cortex-m4
-FPU = -mfpu=fpv4-sp-d16
-FLOAT-ABI = -mfloat-abi=hard
-########################################################
-```
-
-Once `makefile` has been appropriately edited, the library can be build by doing:
+Build using the appropriate makefile.
 
 ```bash
-cd /path/to/wloop_can
-make
+# ex. for ring_encoder
+make -f ring_encoder.makefile
 ```
 
 ## Linking With STM32 Project
