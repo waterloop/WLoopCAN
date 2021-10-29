@@ -34,20 +34,11 @@ Make sure that RX interrupts are enabled.
 
 ### STM32CubeIDE
 
-Move the contents of `eclipse/<board_name>` into the root directory of this repo. Open the directory in STM32CubeIDE then it should build out of the box.
+Open in STM32CubeIDE. From the topbar, select `Project -> Properties`, then click on `C/C++ Build`. Under `Builder Settings`, change the `Build command` to the appropriate board. For example, for the Master BMS you would change the command to:
 
-Manual steps if the above doesn't work:
-
-1. When opening the project, make sure to check "Search for nested projects".
-2. Open a file under the `WLoopCAN` directory
-3. Under `Project -> Properties`, click on `C/C++ Build -> Settings` 
-4. Under `MCU Settings`, select the correct MCU and configure the settings (should be fairly straight forward)
-5. Under `MCU GCC Compiler -> Preprocessor`, define the name of your board (the default is `MASTER_BMS`, a list of names can be found in `inc/config.h`)
-6. Under `MCU GCC Compiler -> Preprocessor`, define the name of your device family (default is `STM32F405xx`, refer to the makefiles if confused)
-7. Under `MCU GCC Compiler -> Include Paths`, correct the include paths for your MCU (default is for `STM32F405RGTx`)
-8. Hit `Apply and Close`
-
-Finally, you can build by clicking the hammer button in the top let.
+```bash
+make master_bms
+```
 
 ### GNU Make
 
@@ -59,8 +50,8 @@ Finally, you can build by clicking the hammer button in the top let.
 Build using the board name.
 
 ```bash
-# ex. for ring_encoder
-make ring_encoder
+# ex. for master_bms
+make master_bms
 ```
 
 ## Linking With STM32 Project
@@ -72,7 +63,7 @@ Follow the following instructions:
 1. Open the `Project -> Properties` menu, then open `C/C++ Build -> Settings`
 2. Under `MCU GCC Compiler -> Include Paths`, add `../../WLoopCAN/inc`
 3. Under `MCU GCC Compiler -> Preprocessor` add the name of your board (a list of names can be found in `inc/config.h`)
-4. Under `MCU GCC Linker -> Miscellaneous` add `../../WLoopCAN/Debug/wloop_can.a` to additional object files
+4. Under `MCU GCC Linker -> Miscellaneous` add `../../WLoopCAN/bin/wloop_can.a` to additional object files
 
 ### GNU Make
 
@@ -100,7 +91,7 @@ int main();
 
 int main() {
     /* USER CODE BEGIN 2 */
-    if ( CANBus_init(&hcan1) != HAL_OK) { Error_Handler(); }
+    if (CANBus_init(&hcan1) != HAL_OK) { Error_Handler(); }
 
     if (CANBus_subscribe(BATTERY_PACK_CURRENT) != HAL_OK) { Error_Handler(); };
 
