@@ -3,7 +3,7 @@
 #include "can_frame.h"
 #include "drivers.h"
 #include "helpers.h"
-#include "tests/serial_can.h"
+#include "tests/echo.h"
 
 void input(char* msg, char* input_buff) {
     printf(msg);
@@ -11,12 +11,10 @@ void input(char* msg, char* input_buff) {
     printf("\r\n");
 }
 
-void CAN_test() {
-//    if ( CANBus_init(&hcan1) != HAL_OK) { Error_Handler(); }
+void CAN_test(CAN_HandleTypeDef hcan) {
+    if ( CANBus_init(&hcan) != HAL_OK) { Error_Handler(); }
 
-//    hcan1.Instance->MCR &= ~(1 << 16);
-
-//    if (CANBus_subscribe(BATTERY_PACK_CURRENT) != HAL_OK) { Error_Handler(); };
+    if (CANBus_subscribe_all() != HAL_OK) { Error_Handler(); };
 
 //    CANFrame tx_frame = CANFrame_init(BATTERY_PACK_CURRENT.id);
 //    CANFrame_set_field(&tx_frame, BATTERY_PACK_CURRENT, FLOAT_TO_UINT(4.20));

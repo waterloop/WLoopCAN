@@ -7,6 +7,6 @@
 #include "helpers.h"
 
 #ifdef DEBUG
-    #include "tests/serial_can.h"
+    #include "tests/echo.h"
 #endif
 
