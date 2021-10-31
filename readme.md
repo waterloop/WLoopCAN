@@ -32,6 +32,10 @@ Make sure that RX interrupts are enabled.
 
 ## Building
 
+### Configuration
+
+Enable or disable features from the build by editing `feature_flags.mk`. All features are enabled by default.
+
 ### STM32CubeIDE
 
 Open in STM32CubeIDE. From the topbar, select `Project -> Properties`, then click on `C/C++ Build`. Under `Builder Settings`, change the `Build command` to the appropriate board. For example, for the Master BMS you would change the command to:
