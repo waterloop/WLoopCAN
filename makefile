@@ -1,15 +1,18 @@
 BUILD_DIR = bin
-MAKEFILES_DIR = makefiles
 
 all:
-	@echo 'no rule to build "all", must specify board...'
+	@echo 'Error: no rule to build "all", must specify board (ex. make master_bms)'
+	@echo ""
 
 master_bms:
-	make -f $(MAKEFILES_DIR)/master_bms.makefile
+	make -f main.mk \
+		BUILD_DIR=$(BUILD_DIR) \
+		BOARD_VARS="master_bms.mk"
 
 ring_encoder:
-	make -f $(MAKEFILES_DIR)/ring_encoder.makefile
+	make -f main.mk \
+		BUILD_DIR=$(BUILD_DIR) \
+		BOARD_VARS="ring_encoder.mk"
 
 clean:
 	rm -rf $(BUILD_DIR)
-
