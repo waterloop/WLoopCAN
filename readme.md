@@ -32,6 +32,10 @@ Make sure that RX interrupts are enabled.
 
 ## Building
 
+### Configuration
+
+Enable or disable features from the build by editing `feature_flags.mk`. All features are enabled by default.
+
 ### STM32CubeIDE
 
 Open in STM32CubeIDE. From the topbar, select `Project -> Properties`, then click on `C/C++ Build`. Under `Builder Settings`, change the `Build command` to the appropriate board. For example, for the Master BMS you would change the command to:
@@ -61,7 +65,7 @@ make master_bms
 Follow the following instructions:
 
 1. Open the `Project -> Properties` menu, then open `C/C++ Build -> Settings`
-2. Under `MCU GCC Compiler -> Include Paths`, add `../../WLoopCAN/inc`
+2. Under `MCU GCC Compiler -> Include Paths`, add `../../WLoopCAN/include`
 3. Under `MCU GCC Compiler -> Preprocessor` add the name of your board (a list of names can be found in `inc/config.h`)
 4. Under `MCU GCC Linker -> Miscellaneous` add `../../WLoopCAN/bin/wloop_can.a` to additional object files
 
@@ -69,7 +73,7 @@ Follow the following instructions:
 
 Follow the following instructions:
 
-1. Add `-I ./WLoopCAN/inc` to your compilation flags
+1. Add `-I ./WLoopCAN/include` to your compilation flags
 2. Add `-D <board_name>` to your compilation flags (a list of names can be found in `inc/config.h`)
 3. Link `./WLoopCAN/bin/wloop_can.a` with the rest of your object files
 

@@ -3,7 +3,7 @@
 #include "can_frame.h"
 #include "drivers.h"
 #include "helpers.h"
-#include "tests/echo.h"
+#include "echo.h"
 
 void input(char* msg, char* input_buff) {
     printf(msg);

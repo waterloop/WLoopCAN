@@ -1,44 +1,26 @@
-########################################################
-# USER DEFINED VARIABLES
-DEBUG = true
-
-# BOARD = MASTER_BMS
-# BOARD = MOTOR_CONTROLLER
-BOARD = RING_ENCODER
-# BOARD = PRESSURE_SENSOR
-# BOARD = LV_POWER
-# BOARD = TEMP_SENSOR
-
-DEVICE = STM32F042K4Tx
-DEVICE_VARIANT = STM32F042x6
-DEVICE_FAMILY = STM32F0xx
-
-CPU = -mcpu=cortex-m0
-#FPU = -mfpu=fpv4-sp-d16
-FLOAT-ABI = -mfloat-abi=soft
-########################################################
+include $(BOARD_VARS)
+include feature_flags.mk
 
 TARGET = wloop_can.a
-BUILD_DIR = bin
-
-ifeq ($(DEBUG), true)
-	OPT = -Og
-else
-	OPT = -O2
-endif
 
 CC = arm-none-eabi-gcc
 CP = arm-none-eabi-gcc-objcopy
 SZ = arm-none-eabi-size
 AR = arm-none-eabi-ar
 
-C_SOURCES = $(wildcard ./src/*.c)
-ifeq ($(DEBUG), true)
-	C_SOURCES += $(wildcard ./src/tests/*c)
+OPT = -Og
+
+ifeq ($(CAN), 1)
+	C_SOURCES = $(wildcard ./can/src/*.c)
+endif
+
+ifeq ($(TESTS), 1)
+	C_SOURCES += $(wildcard ./tests/src/*c)
 endif
 
 C_INCLUDES = \
--I ./inc \
+-I ./can/inc \
+-I ./tests/inc \
 -I ../$(DEVICE)/Core/Inc \
 -I ../$(DEVICE)/Drivers/$(DEVICE_FAMILY)_HAL_Driver/Inc \
 -I ../$(DEVICE)/Drivers/$(DEVICE_FAMILY)_HAL_Driver/Inc/Legacy \
@@ -50,7 +32,7 @@ C_DEFS = \
 -D $(DEVICE_VARIANT) \
 -D $(BOARD)
 
-ifeq ($(DEBUG), true)
+ifeq ($(DEBUG), 0)
 	-D += DEBUG
 endif
 
@@ -58,7 +40,7 @@ MCU = $(CPU) -mthumb $(FPU) $(FLOAT-ABI)
 
 C_FLAGS = $(C_INCLUDES) $(C_DEFS) $(MCU) $(OPT) -ffunction-sections -fdata-sections -Wall -MMD -MP -MF"$(@:%.o=%.d)"
 
-ifeq ($(DEBUG), true)
+ifeq ($(DEBUG), 0)
 	C_FLAGS += -ggdb
 endif
 
@@ -74,11 +56,7 @@ $(BUILD_DIR)/$(TARGET): $(OBJECTS) | $(BUILD_DIR)
 	$(SZ) $@
 	@echo ""
 
-$(BUILD_DIR)/%.o: ./src/%.c | $(BUILD_DIR)
-	$(CC) -c $(C_FLAGS) -Wa,-a,-ad,-alms=$(BUILD_DIR)/$(notdir $(<:.c=.lst)) $< -o $@
-	@echo ""
-
-$(BUILD_DIR)/%.o: ./src/tests/%.c | $(BUILD_DIR)
+$(BUILD_DIR)/%.o: ./*/src/%.c | $(BUILD_DIR)
 	$(CC) -c $(C_FLAGS) -Wa,-a,-ad,-alms=$(BUILD_DIR)/$(notdir $(<:.c=.lst)) $< -o $@
 	@echo ""
 
