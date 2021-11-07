@@ -88,7 +88,7 @@ file: main.c
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "wloop_can.h"
+#include "can.h"
 /* USER CODE END Includes */
 
 int main();
