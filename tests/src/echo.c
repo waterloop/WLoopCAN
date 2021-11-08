@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "main.h"
+#include "exceptions.h"
 #include "can_frame.h"
 #include "drivers.h"
 #include "helpers.h"
@@ -12,9 +12,9 @@ void input(char* msg, char* input_buff) {
 }
 
 void CAN_test(CAN_HandleTypeDef hcan) {
-    if ( CANBus_init(&hcan) != HAL_OK) { Error_Handler(); }
+    if ( CANBus_init(&hcan) != HAL_OK) { CANBus_error_handler(); }
 
-    if (CANBus_subscribe_all() != HAL_OK) { Error_Handler(); };
+    if (CANBus_subscribe_all() != HAL_OK) { CANBus_error_handler(); };
 
 //    CANFrame tx_frame = CANFrame_init(BATTERY_PACK_CURRENT.id);
 //    CANFrame_set_field(&tx_frame, BATTERY_PACK_CURRENT, FLOAT_TO_UINT(4.20));

@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "main.h"
+#include "exceptions.h"
 #include "circ_queue.h"
 #include "can_frame.h"
 #include "config.h"
@@ -11,7 +11,6 @@ CAN_HandleTypeDef CAN_HANDLE;
 CAN_TxHeaderTypeDef TX_HDR = {
     .StdId = 0x0000,                // not used
     .ExtId = 0x00000000,            // write correct arb_id before a frame is sent
-    // .IDE = CAN_ID_EXT,
     .IDE = CAN_ID_STD,              // use 11 bit IDs
     .RTR = CAN_RTR_DATA,            // send data frames
     .DLC = 8,                       // send 8-byte payloads
@@ -29,9 +28,8 @@ struct _filter_bank FILTER_BANK_MAP[MAX_NUM_FILTER_BANKS];
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan) {
     if (HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &RX_HDR, RX_BUFF) != HAL_OK) {
-        Error_Handler();
+        CANBus_error_handler();
     }
-    // CANFrame rx_frame = CANFrame_init(RX_HDR.ExtId);
     CANFrame rx_frame = CANFrame_init(RX_HDR.StdId);
     for (uint8_t i = 0; i < 8; i++) {
         rx_frame.pld[i] = RX_BUFF[i];
@@ -168,7 +166,6 @@ HAL_StatusTypeDef CANBus_subscribe_all() {
 
 
 HAL_StatusTypeDef CANBus_put_frame(CANFrame* frame) {
-    // TX_HDR.ExtId = frame->id;
     TX_HDR.StdId = frame->id;
 
     int8_t status = HAL_CAN_AddTxMessage(&CAN_HANDLE, &TX_HDR, frame->pld, &TX_MAILBOX);
