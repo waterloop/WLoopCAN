@@ -69,6 +69,7 @@ extern const Field TARGET_FREQ;
 extern const Field TARGET_POWER;
 
 #ifdef MASTER_BMS
+    extern const Field BMS_FAULT_REPORT;
     extern const Field BMS_STATE_CHANGE_ACK_NACK;
     extern const Field BATTERY_PACK_CURRENT;
     extern const Field CELL_TEMPERATURE;

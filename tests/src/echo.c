@@ -11,6 +11,32 @@ void input(char* msg, char* input_buff) {
     printf("\r\n");
 }
 
+void echo(CAN_HandleTypeDef* hcan) {
+    if (CANBus_init(hcan) != HAL_OK) { CANBus_error_handler(); }
+    if (CANBus_subscribe_all() != HAL_OK) { CANBus_error_handler(); }
+
+    hcan->Instance->MCR = 0x60;
+
+    CANFrame asdf = CANFrame_init(BATTERY_PACK_CURRENT.id);
+    CANFrame_set_field(&asdf, BATTERY_PACK_CURRENT, FLOAT_TO_UINT(420.69));
+    CANFrame_set_field(&asdf, CELL_TEMPERATURE, FLOAT_TO_UINT(69.420));
+
+    while (1) {
+        if (CANBus_put_frame(&asdf) != HAL_OK) { CANBus_error_handler();  }
+
+        if (!Queue_empty(&RX_QUEUE)) {
+            CANFrame rx_frame = CANBus_get_frame();
+            CANFrame tx_frame = CANFrame_init(rx_frame.id);
+            for (uint8_t i = 0; i < 8; i++) {
+                tx_frame.pld[i] = rx_frame.pld[i];
+            }
+            if (CANBus_put_frame(&tx_frame) != HAL_OK) { CANBus_error_handler(); }
+        }
+    }
+
+}
+
+
 void CAN_test(CAN_HandleTypeDef hcan) {
     if ( CANBus_init(&hcan) != HAL_OK) { CANBus_error_handler(); }
 

@@ -1,4 +1,4 @@
 #pragma once
 
-void can_serial_test();
+void echo(CAN_HandleTypeDef* hcan);
 
