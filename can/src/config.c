@@ -13,7 +13,8 @@ const Field TARGET_FREQUENCY    = {0x006, 4, 8};
 const Field TARGET_POWER        = {0x007, 0, 4};
 
 #ifdef MASTER_BMS
-    const Field BMS_FAULT_REPORT            = {0x00A, 0, 0};
+    const Field BMS_SEVERITY_CODE           = {0x00A, 0, 1};
+    const Field BMS_ERROR_CODE              = {0x00A, 1, 2};
     const Field BMS_STATE_CHANGE_ACK_NACK   = {0x00B, 0, 1};
     const Field BATTERY_PACK_CURRENT        = {0x001, 0, 4};
     const Field CELL_TEMPERATURE            = {0x001, 4, 8};
