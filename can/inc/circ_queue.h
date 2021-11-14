@@ -17,22 +17,8 @@ typedef struct {
     size_t _tail;
 } Queue;
 
-#define _INC_HEAD(this) {                       \
-    if (this->_head == (RX_BUFF_SIZE - 1)) {    \
-        this->_head = 0;                        \
-    }                                           \
-    else {                                      \
-        this->_head += 1;                       \
-    }                                           \
-}
-#define _INC_TAIL(this) {                       \
-    if (this->_tail == (RX_BUFF_SIZE - 1)) {    \
-        this->_tail = 0;                        \
-    }                                           \
-    else {                                      \
-        this->_tail += 1;                       \
-    }                                           \
-}
+#define _INC_HEAD(this) ( (this->_head + 1) % RX_BUFF_SIZE )
+#define _INC_TAIL(this) ( (this->_tail + 1) % RX_BUFF_SIZE )
 
 Queue Queue_init();
 uint8_t Queue_empty(Queue* this);
