@@ -118,7 +118,7 @@ extern const Field MC_CAP_VOLTAGE;
 
 extern const Field IGBT_TEMPERATURE;
 extern const Field MOTOR_VOLTAGE;
-extern const Field POD_SPEED;
+extern const Field MC_POD_SPEED;
 extern const Field MOTOR_CURRENT;
 extern const Field BATTERY_CURRENT;
 extern const Field BATTERY_VOLTAGE;
@@ -127,7 +127,7 @@ extern const Field MC_STATE_CHANGE_ACK_NACK;
 #endif
 
 #ifdef RING_ENCODER
-const Field POD_SPEED;
+extern const Field RE_POD_SPEED;
 #endif
 
 #ifdef PRESSURE_SENSOR

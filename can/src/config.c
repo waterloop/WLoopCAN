@@ -30,14 +30,14 @@ const Field TARGET_POWER        = {0x007, 0, 4};
     const Field MC_STATE_CHANGE_ACK_NACK    = {0x015, 0, 1};
     const Field IGBT_TEMPERATURE            = {0x002, 0, 4};
     const Field MOTOR_VOLTAGE               = {0x002, 4, 8};
-    const Field POD_SPEED                   = {0x016, 0, 4};
+    const Field MC_POD_SPEED                = {0x016, 0, 4};
     const Field MOTOR_CURRENT               = {0x016, 4, 8};
     const Field BATTERY_CURRENT             = {0x017, 0, 4};
     const Field BATTERY_VOLTAGE             = {0x017, 4, 8};
 #endif
 
 #ifdef RING_ENCODER
-    const Field POD_SPEED = {0x01F, 0, 4};
+    const Field RE_POD_SPEED = {0x01F, 0, 4};
 #endif
 
 #ifdef PRESSURE_SENSOR
