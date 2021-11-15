@@ -153,6 +153,7 @@ extern const Field STATE_ID_ACK_NACK;
 #endif
 
 #ifdef RING_ENCODER
+#define RING_ENCODER_DATA 0x01FU
 extern const Field RE_POD_SPEED;
 #endif
 
@@ -160,8 +161,13 @@ extern const Field RE_POD_SPEED;
 #endif
 
 #ifdef LV_POWER
+#define CURRENT_5V_DATA 0x030U
 extern const Field CURRENT_5V;
+
+#define CURRENT_12V_DATA 0x031U
 extern const Field CURRENT_12V;
+
+#define CURRENT_24V_DATA 0x032U
 extern const Field CURRENT_24V;
 #endif
 

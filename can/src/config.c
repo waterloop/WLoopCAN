@@ -47,16 +47,16 @@ const Field SET_CURRENT_LIMIT       = {MANUAL_CONTROL_3, 4, 8};
 #endif
 
 #ifdef RING_ENCODER
-    const Field RE_POD_SPEED = {0x01F, 0, 4};
+    const Field RE_POD_SPEED = {RING_ENCODER_DATA, 0, 4};
 #endif
 
 #ifdef PRESSURE_SENSOR
 #endif
 
 #ifdef LV_POWER
-    const Field CURRENT_5V  = {0x030, 0, 4};
-    const Field CURRENT_12V = {0x031, 0, 4};
-    const Field CURRENT_24V = {0x032, 0, 4};
+    const Field CURRENT_5V  = {CURRENT_5V_DATA, 0, 4};
+    const Field CURRENT_12V = {CURRENT_12V_DATA, 0, 4};
+    const Field CURRENT_24V = {CURRENT_24V_DATA, 0, 4};
 #endif
 
 #ifdef TEMP_SENSOR
