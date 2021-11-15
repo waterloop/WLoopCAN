@@ -60,7 +60,7 @@ HAL_StatusTypeDef CANBus_init(CAN_HandleTypeDef* hcan) {
     return HAL_OK;
 }
 
-HAL_StatusTypeDef CANBus_subscribe(Field field) {
+HAL_StatusTypeDef CANBus_subscribe(uint16_t msg) {
     // find the first unused filter
     int8_t bank_num = -1;
     for (uint8_t i = 0; i < MAX_NUM_FILTER_BANKS; i++) {
@@ -75,7 +75,7 @@ HAL_StatusTypeDef CANBus_subscribe(Field field) {
         return HAL_ERROR;
     }
 
-    uint16_t std_id = field.id & 0x7ff;
+    uint16_t std_id = msg & 0x7ff;
 
     CAN_FilterTypeDef filter = {
         .FilterActivation = CAN_FILTER_ENABLE,
@@ -96,21 +96,21 @@ HAL_StatusTypeDef CANBus_subscribe(Field field) {
 
     if (status == HAL_OK) {
         FILTER_BANK_MAP[bank_num].filter_typedef = filter;
-        FILTER_BANK_MAP[bank_num].id = field.id;
+        FILTER_BANK_MAP[bank_num].id = msg;
     }
     return status;
 }
-HAL_StatusTypeDef CANBus_unsubscribe(Field field) {
-    // find the filter bank associated with the given field
+HAL_StatusTypeDef CANBus_unsubscribe(uint16_t msg) {
+    // find the filter bank associated with the given msg
     int8_t bank_num = -1;
     for (uint8_t i = 0; i < MAX_NUM_FILTER_BANKS; i++) {
-        if (FILTER_BANK_MAP[i].id == field.id) {
+        if (FILTER_BANK_MAP[i].id == msg) {
             bank_num = i;
         }
     }
 
     if (bank_num == -1) {
-        printf("Error: not currently subscribed to the given field...\r\n");
+        printf("Error: not currently subscribed to the given msg...\r\n");
         return HAL_ERROR;
     }
 

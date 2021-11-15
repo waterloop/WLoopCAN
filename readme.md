@@ -2,6 +2,8 @@
 
 A minimal implementation of a CAN library for G5. Handles sending and receiving CAN frames from the bus.
 
+The format of messages that are sent can be found [here](https://docs.google.com/document/d/1pAAAPyWClxrq7MwrA0_AGxnqU6B5r5MHmvRERMY6hUo/edit#heading=h.i7btlmynd88e).
+
 ## Installation
 
 ```bash
@@ -96,10 +98,9 @@ int main();
 int main() {
     /* USER CODE BEGIN 2 */
     if (CANBus_init(&hcan1) != HAL_OK) { Error_Handler(); }
+    if (CANBus_subscribe(BMS_HEALTH_CHECK) != HAL_OK) { Error_Handler(); };
 
-    if (CANBus_subscribe(BATTERY_PACK_CURRENT) != HAL_OK) { Error_Handler(); };
-
-    CANFrame tx_frame = CANFrame_init(BATTERY_PACK_CURRENT.id);
+    CANFrame tx_frame = CANFrame_init(BMS_HEALTH_CHECK);
     CANFrame_set_field(&tx_frame, BATTERY_PACK_CURRENT, FLOAT_TO_UINT(4.20));
     CANFrame_set_field(&tx_frame, CELL_TEMPERATURE, FLOAT_TO_UINT(69.420));
 
@@ -121,3 +122,14 @@ int main() {
 }
 ```
 
+## TODO
+
+**Immediate**
+
+* Add message names for all the fields, follow what's already been done in `can/src/config.c` and `can/inc/config.h`
+* Update `.ioc-settings` for all boards
+
+**Long Term**
+
+* Add bootloader functionality
+* Add CAN state machine

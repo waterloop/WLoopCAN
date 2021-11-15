@@ -63,6 +63,8 @@ Fields present in this doc:
     - https://docs.google.com/spreadsheets/d/18rGH__yyJPf3jil74yTlVyFFqCOyuNzP3DCFmmIWWbo/edit#gid=0
 */
 
+#define STATE_CHANGE_REQ 0x000U
+extern const Field STATE_ID;
 typedef enum {
     RESTING = 0x00,
     LV_READY = 0x01,
@@ -77,19 +79,26 @@ typedef enum {
     DECELERATING = 0x0A
 } StateID;
 
-extern const Field STATE_ID;
+#define MANUAL_CONTROL_1 0x006U
 extern const Field TARGET_SPEED;
 extern const Field TARGET_FREQ;
+
+#define MANUAL_CONTROL_2 0x007U
 extern const Field TARGET_POWER;
 
-#ifdef MASTER_BMS
+#define MANUAL_CONTROL_3 0x008U
+extern const Field SET_TEMPERATURE_LIMIT;
+extern const Field SET_CURRENT_LIMIT;
 
+#ifdef MASTER_BMS
+#define BMS_FAULT_REPORT 0x00A
+extern const Field BMS_SEVERITY_CODE;
+extern const Field BMS_ERROR_CODE;
 typedef enum {
     SEVERE = 0x00,
     DANGER = 0x01,
     WARNING = 0x02
 } BmsSeverityCode;
-
 typedef enum {
     BATTERY_OVERVOLTAGE_ERR = 0x00,
     BATTERY_UNDERVOLTAGAE_ERR = 0x01,
@@ -101,32 +110,50 @@ typedef enum {
     BUCK_TEMPERATURE_ERR = 0x07
 } BmsErrorCode;
 
-extern const Field BMS_SEVERITY_CODE;
-extern const Field BMS_ERROR_CODE;
-extern const Field BMS_STATE_CHANGE_ACK_NACK;
+#define BMS_STATE_CHANGE_ACK_NACK 0x00BU
+extern const Field STATE_ID_ACK_NACK;
+
+#define BMS_HEALTH_CHECK 0x001U
 extern const Field BATTERY_PACK_CURRENT;
 extern const Field CELL_TEMPERATURE;
+
+#define BMS_DATA_1 0x00CU
 extern const Field BATTERY_PACK_VOLTAGE;
 extern const Field STATE_OF_CHARGE;
+
+#define BMS_DATA_2 0x00DU
 extern const Field BUCK_TEMPERATURE;
 extern const Field BMS_CURRENT;
+
+#define BMS_DATA_3 0x00EU
 extern const Field MC_CAP_VOLTAGE;
 
 #endif
 
 #ifdef MOTOR_CONTROLLER
+#define MOTOR_CONTROLLER_FAULT_REPORT 0x014
+extern const Field MOTOR_CONTROLLER_SEVERITY_CODE;
+extern const Field MOTOR_CONTROLLER_ERROR_CODE;
 
+#define MOTOR_CONTROLLER_HEALTH_CHECK 0x002U
 extern const Field IGBT_TEMPERATURE;
 extern const Field MOTOR_VOLTAGE;
+
+#define MOTOR_CONTROLLER_DATA_1 0x016U
 extern const Field MC_POD_SPEED;
 extern const Field MOTOR_CURRENT;
+
+#define MOTOR_CONTROLLER_DATA_2 0x017U
 extern const Field BATTERY_CURRENT;
 extern const Field BATTERY_VOLTAGE;
-extern const Field MC_STATE_CHANGE_ACK_NACK;
+
+#define MOTOR_CONTROLLER_STATE_CHANGE_ACK_NACK
+extern const Field STATE_ID_ACK_NACK;
 
 #endif
 
 #ifdef RING_ENCODER
+#define RING_ENCODER_DATA 0x01FU
 extern const Field RE_POD_SPEED;
 #endif
 
@@ -134,8 +161,13 @@ extern const Field RE_POD_SPEED;
 #endif
 
 #ifdef LV_POWER
+#define CURRENT_5V_DATA 0x030U
 extern const Field CURRENT_5V;
+
+#define CURRENT_12V_DATA 0x031U
 extern const Field CURRENT_12V;
+
+#define CURRENT_24V_DATA 0x032U
 extern const Field CURRENT_24V;
 #endif
 

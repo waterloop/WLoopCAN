@@ -24,8 +24,8 @@ extern struct _filter_bank FILTER_BANK_MAP[MAX_NUM_FILTER_BANKS];
 
 HAL_StatusTypeDef CANBus_init(CAN_HandleTypeDef* hcan);
 
-HAL_StatusTypeDef CANBus_subscribe(Field field);
-HAL_StatusTypeDef CANBus_unsubscribe(Field field);
+HAL_StatusTypeDef CANBus_subscribe(uint16_t msg);
+HAL_StatusTypeDef CANBus_unsubscribe(uint16_t msg);
 HAL_StatusTypeDef CANBus_subscribe_all();
 
 HAL_StatusTypeDef CANBus_put_frame(CANFrame* frame); 
