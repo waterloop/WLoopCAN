@@ -7,14 +7,20 @@ Fields present in this doc:
 
 Start and stop indices (stop indices are +1 the actual index)
 */
-const Field STATE_ID            = {0x000, 0, 1};
-const Field TARGET_SPEED        = {0x006, 0, 4};
-const Field TARGET_FREQUENCY    = {0x006, 4, 8};
-const Field TARGET_POWER        = {0x007, 0, 4};
+const Field STATE_ID                = {STATE_CHANGE_REQ, 0, 1};
+
+const Field TARGET_SPEED            = {MANUAL_CONTROL_1, 0, 4};
+const Field TARGET_FREQUENCY        = {MANUAL_CONTROL_1, 4, 8};
+
+const Field TARGET_POWER            = {MANUAL_CONTROL_2, 0, 4};
+
+const Field SET_TEMPERATURE_LIMIT   = {MANUAL_CONTROL_3, 0, 4};
+const Field SET_CURRENT_LIMIT       = {MANUAL_CONTROL_3, 4, 8};
 
 #ifdef MASTER_BMS
-    const Field BMS_SEVERITY_CODE           = {0x00A, 0, 1};
-    const Field BMS_ERROR_CODE              = {0x00A, 1, 2};
+    const Field BMS_SEVERITY_CODE           = {BMS_FAULT_REPORT, 0, 1};
+    const Field BMS_ERROR_CODE              = {BMS_FAULT_REPORT, 1, 2};
+
     const Field BMS_STATE_CHANGE_ACK_NACK   = {0x00B, 0, 1};
     const Field BATTERY_PACK_CURRENT        = {0x001, 0, 4};
     const Field CELL_TEMPERATURE            = {0x001, 4, 8};

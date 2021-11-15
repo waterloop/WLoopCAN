@@ -63,6 +63,8 @@ Fields present in this doc:
     - https://docs.google.com/spreadsheets/d/18rGH__yyJPf3jil74yTlVyFFqCOyuNzP3DCFmmIWWbo/edit#gid=0
 */
 
+#define STATE_CHANGE_REQ 0x000U
+extern const Field STATE_ID;
 typedef enum {
     RESTING = 0x00,
     LV_READY = 0x01,
@@ -77,19 +79,26 @@ typedef enum {
     DECELERATING = 0x0A
 } StateID;
 
-extern const Field STATE_ID;
+#define MANUAL_CONTROL_1 0x006U
 extern const Field TARGET_SPEED;
 extern const Field TARGET_FREQ;
+
+#define MANUAL_CONTROL_2 0x007U
 extern const Field TARGET_POWER;
 
-#ifdef MASTER_BMS
+#define MANUAL_CONTROL_3 0x008U
+extern const Field SET_TEMPERATURE_LIMIT;
+extern const Field SET_CURRENT_LIMIT;
 
+#ifdef MASTER_BMS
+#define BMS_FAULT_REPORT 0x00A
+extern const Field BMS_SEVERITY_CODE;
+extern const Field BMS_ERROR_CODE;
 typedef enum {
     SEVERE = 0x00,
     DANGER = 0x01,
     WARNING = 0x02
 } BmsSeverityCode;
-
 typedef enum {
     BATTERY_OVERVOLTAGE_ERR = 0x00,
     BATTERY_UNDERVOLTAGAE_ERR = 0x01,
@@ -101,8 +110,6 @@ typedef enum {
     BUCK_TEMPERATURE_ERR = 0x07
 } BmsErrorCode;
 
-extern const Field BMS_SEVERITY_CODE;
-extern const Field BMS_ERROR_CODE;
 extern const Field BMS_STATE_CHANGE_ACK_NACK;
 extern const Field BATTERY_PACK_CURRENT;
 extern const Field CELL_TEMPERATURE;
