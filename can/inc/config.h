@@ -111,7 +111,7 @@ typedef enum {
 } BmsErrorCode;
 
 #define BMS_STATE_CHANGE_ACK_NACK 0x00BU
-extern const Field STATE_ID_ACK_NACK;
+extern const Field BMS_STATE_ID_ACK_NACK;
 
 #define BMS_HEALTH_CHECK 0x001U
 extern const Field BATTERY_PACK_CURRENT;
@@ -148,7 +148,7 @@ extern const Field BATTERY_CURRENT;
 extern const Field BATTERY_VOLTAGE;
 
 #define MOTOR_CONTROLLER_STATE_CHANGE_ACK_NACK
-extern const Field STATE_ID_ACK_NACK;
+extern const Field MOTOR_CONTROLLER_STATE_ID_ACK_NACK;
 
 #endif
 
