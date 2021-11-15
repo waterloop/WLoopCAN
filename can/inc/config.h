@@ -110,26 +110,45 @@ typedef enum {
     BUCK_TEMPERATURE_ERR = 0x07
 } BmsErrorCode;
 
-extern const Field BMS_STATE_CHANGE_ACK_NACK;
+#define BMS_STATE_CHANGE_ACK_NACK 0x00BU
+extern const Field STATE_ID_ACK_NACK;
+
+#define BMS_HEALTH_CHECK 0x001U
 extern const Field BATTERY_PACK_CURRENT;
 extern const Field CELL_TEMPERATURE;
+
+#define BMS_DATA_1 0x00CU
 extern const Field BATTERY_PACK_VOLTAGE;
 extern const Field STATE_OF_CHARGE;
+
+#define BMS_DATA_2 0x00DU
 extern const Field BUCK_TEMPERATURE;
 extern const Field BMS_CURRENT;
+
+#define BMS_DATA_3 0x00EU
 extern const Field MC_CAP_VOLTAGE;
 
 #endif
 
 #ifdef MOTOR_CONTROLLER
+#define MOTOR_CONTROLLER_FAULT_REPORT 0x014
+extern const Field MOTOR_CONTROLLER_SEVERITY_CODE;
+extern const Field MOTOR_CONTROLLER_ERROR_CODE;
 
+#define MOTOR_CONTROLLER_HEALTH_CHECK 0x002U
 extern const Field IGBT_TEMPERATURE;
 extern const Field MOTOR_VOLTAGE;
+
+#define MOTOR_CONTROLLER_DATA_1 0x016U
 extern const Field MC_POD_SPEED;
 extern const Field MOTOR_CURRENT;
+
+#define MOTOR_CONTROLLER_DATA_2 0x017U
 extern const Field BATTERY_CURRENT;
 extern const Field BATTERY_VOLTAGE;
-extern const Field MC_STATE_CHANGE_ACK_NACK;
+
+#define MOTOR_CONTROLLER_STATE_CHANGE_ACK_NACK
+extern const Field STATE_ID_ACK_NACK;
 
 #endif
 

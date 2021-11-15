@@ -21,25 +21,29 @@ const Field SET_CURRENT_LIMIT       = {MANUAL_CONTROL_3, 4, 8};
     const Field BMS_SEVERITY_CODE           = {BMS_FAULT_REPORT, 0, 1};
     const Field BMS_ERROR_CODE              = {BMS_FAULT_REPORT, 1, 2};
 
-    const Field BMS_STATE_CHANGE_ACK_NACK   = {0x00B, 0, 1};
-    const Field BATTERY_PACK_CURRENT        = {0x001, 0, 4};
-    const Field CELL_TEMPERATURE            = {0x001, 4, 8};
-    const Field BATTERY_PACK_VOLTAGE        = {0x00C, 0, 4};
-    const Field STATE_OF_CHARGE             = {0x00C, 4, 8};
-    const Field BUCK_TEMPERATURE            = {0x00D, 0, 4};
-    const Field BMS_CURRENT                 = {0x00D, 4, 8};
-    const Field MC_CAP_VOLTAGE              = {0x00E, 0, 4};
+    const Field BMS_STATE_ID_ACK_NACK       = {BMS_STATE_CHANGE_ACK_NACK, 0, 1};
+
+    const Field BATTERY_PACK_CURRENT        = {BMS_HEALTH_CHECK, 0, 4};
+    const Field CELL_TEMPERATURE            = {BMS_HEALTH_CHECK, 4, 8};
+    const Field BATTERY_PACK_VOLTAGE        = {BMS_DATA_1, 0, 4};
+    const Field STATE_OF_CHARGE             = {BMS_DATA_1, 4, 8};
+    const Field BUCK_TEMPERATURE            = {BMS_DATA_2, 0, 4};
+    const Field BMS_CURRENT                 = {BMS_DATA_2, 4, 8};
+    const Field MC_CAP_VOLTAGE              = {BMS_DATA_3, 0, 4};
 #endif
 
 #ifdef MOTOR_CONTROLLER
-    const Field MC_FAULT_REPORT             = {0x014, 0, 0};
-    const Field MC_STATE_CHANGE_ACK_NACK    = {0x015, 0, 1};
-    const Field IGBT_TEMPERATURE            = {0x002, 0, 4};
-    const Field MOTOR_VOLTAGE               = {0x002, 4, 8};
-    const Field MC_POD_SPEED                = {0x016, 0, 4};
-    const Field MOTOR_CURRENT               = {0x016, 4, 8};
-    const Field BATTERY_CURRENT             = {0x017, 0, 4};
-    const Field BATTERY_VOLTAGE             = {0x017, 4, 8};
+    const Field MOTOR_CONTROLLER_SEVERITY_CODE      = {MOTOR_CONTROLLER_FAULT_REPORT, 0, 1};
+    const Field MOTOR_CONTROLLER_ERROR_CODE         = {MOTOR_CONTROLLER_FAULT_REPORT, 1, 2};
+
+    const Field MOTOR_CONTROLLER_STATE_ID_ACK_NACK  = {MOTOR_CONTROLLER_STATE_CHANGE_ACK_NACK, 0, 1};
+    
+    const Field IGBT_TEMPERATURE                    = {MOTOR_CONTROLLER_HEALTH_CHECK, 0, 4};
+    const Field MOTOR_VOLTAGE                       = {MOTOR_CONTROLLER_HEALTH_CHECK, 4, 8};
+    const Field MC_POD_SPEED                        = {MOTOR_CONTROLLER_DATA_1, 0, 4};
+    const Field MOTOR_CURRENT                       = {MOTOR_CONTROLLER_DATA_1, 4, 8};
+    const Field BATTERY_CURRENT                     = {MOTOR_CONTROLLER_DATA_2, 0, 4};
+    const Field BATTERY_VOLTAGE                     = {MOTOR_CONTROLLER_DATA_2, 4, 8};
 #endif
 
 #ifdef RING_ENCODER
