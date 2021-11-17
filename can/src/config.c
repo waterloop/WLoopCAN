@@ -21,7 +21,8 @@ const Field SET_CURRENT_LIMIT       = {MANUAL_CONTROL_3, 4, 8};
     const Field BMS_SEVERITY_CODE           = {BMS_FAULT_REPORT, 0, 1};
     const Field BMS_ERROR_CODE              = {BMS_FAULT_REPORT, 1, 2};
 
-    const Field BMS_STATE_ID_ACK_NACK       = {BMS_STATE_CHANGE_ACK_NACK, 0, 1};
+    const Field STATE_CHANGE_ACK_ID         = {BMS_STATE_CHANGE_ACK_NACK, 0, 1};
+    const Field STATE_CHANGE_ACK            = {BMS_STATE_CHANGE_ACK_NACK, 1, 2};
 
     const Field BATTERY_PACK_CURRENT        = {BMS_HEALTH_CHECK, 0, 4};
     const Field CELL_TEMPERATURE            = {BMS_HEALTH_CHECK, 4, 8};
