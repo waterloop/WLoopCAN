@@ -52,6 +52,9 @@ const Field SET_CURRENT_LIMIT       = {MANUAL_CONTROL_3, 4, 8};
 #endif
 
 #ifdef PRESSURE_SENSOR
+    const Field PRESSURE_HIGH  = {PRESSURE_SENSOR_HIGH, 0, 4};
+    const Field PRESSURE_LOW_1 = {PRESSURE_SENSOR_LOW_1, 0, 4};
+    const Field PRESSURE_LOW_2 = {PRESSURE_SENSOR_LOW_2, 0, 4};
 #endif
 
 #ifdef LV_POWER

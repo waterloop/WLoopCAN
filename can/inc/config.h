@@ -159,6 +159,14 @@ extern const Field RE_POD_SPEED;
 #endif
 
 #ifdef PRESSURE_SENSOR
+#define PRESSURE_SENSOR_HIGH 0x020U
+extern const Field PRESSURE_HIGH;
+
+#define PRESSURE_SENSOR_LOW_1 0x021U
+extern const Field PRESSURE_LOW_1;
+
+#define PRESSURE_SENSOR_LOW_2 0x022U
+extern const Field PRESSURE_LOW_2;
 #endif
 
 #ifdef LV_POWER

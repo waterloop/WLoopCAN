@@ -14,5 +14,15 @@ ring_encoder:
 		BUILD_DIR=$(BUILD_DIR) \
 		BOARD_VARS="ring_encoder.mk"
 
+pressure_sensor:
+	make -f main.mk \
+		BUILD_DIR=$(BUILD_DIR) \
+		BOARD_VARS="pressure_sensor.mk"
+
+lv_power:
+	make -f main.mk \
+		BUILD_DIR=$(BUILD_DIR) \
+		BOARD_VARS="lv_power.mk"
+
 clean:
 	rm -rf $(BUILD_DIR)
