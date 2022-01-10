@@ -17,27 +17,27 @@ typedef struct {
     size_t _tail;
 } Queue;
 
-#define _INC_HEAD(this) {                       \
-    if (this->_head == (RX_BUFF_SIZE - 1)) {    \
-        this->_head = 0;                        \
+#define _INC_HEAD(self) {                       \
+    if (self->_head == (RX_BUFF_SIZE - 1)) {    \
+        self->_head = 0;                        \
     }                                           \
     else {                                      \
-        this->_head += 1;                       \
+        self->_head += 1;                       \
     }                                           \
 }
-#define _INC_TAIL(this) {                       \
-    if (this->_tail == (RX_BUFF_SIZE - 1)) {    \
-        this->_tail = 0;                        \
+#define _INC_TAIL(self) {                       \
+    if (self->_tail == (RX_BUFF_SIZE - 1)) {    \
+        self->_tail = 0;                        \
     }                                           \
     else {                                      \
-        this->_tail += 1;                       \
+        self->_tail += 1;                       \
     }                                           \
 }
 
 Queue Queue_init();
-uint8_t Queue_empty(Queue* this);
-void Queue_put(Queue* this, CANFrame val);
-CANFrame Queue_get(Queue* this);
+uint8_t Queue_empty(Queue* self);
+void Queue_put(Queue* self, CANFrame val);
+CANFrame Queue_get(Queue* self);
 
-void Queue_print(Queue* this);
+void Queue_print(Queue* self);
 

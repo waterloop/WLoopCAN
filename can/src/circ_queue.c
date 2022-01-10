@@ -12,31 +12,31 @@ Queue Queue_init() {
     return ret;
 }
 
-uint8_t Queue_empty(Queue* this) {
-    return this->len == 0;
+uint8_t Queue_empty(Queue* self) {
+    return self->len == 0;
 }
 
-void Queue_put(Queue* this, CANFrame val) {
-    if ( !(this->len == RX_BUFF_SIZE) ) {
+void Queue_put(Queue* self, CANFrame val) {
+    if ( !(self->len == RX_BUFF_SIZE) ) {
         // regular insert condition
-        if (Queue_empty(this)) {
-            this->_arr[this->_head] = val;
+        if (Queue_empty(self)) {
+            self->_arr[self->_head] = val;
         }
         else {
-            _INC_TAIL(this);
-            this->_arr[this->_tail] = val;
+            _INC_TAIL(self);
+            self->_arr[self->_tail] = val;
         }
-        this->len += 1;
+        self->len += 1;
     }
     else {
         // overwrite condition
-        this->_arr[this->_head] = val;
-        _INC_HEAD(this);
-        _INC_TAIL(this);
+        self->_arr[self->_head] = val;
+        _INC_HEAD(self);
+        _INC_TAIL(self);
     }
 }
-CANFrame Queue_get(Queue* this) {
-    if (this->len == 0) {
+CANFrame Queue_get(Queue* self) {
+    if (self->len == 0) {
         CANFrame ret = {
             .id = 0xffffffff,
             .pld = {0xff}
@@ -44,22 +44,22 @@ CANFrame Queue_get(Queue* this) {
         return ret;
     }
     else {
-        CANFrame ret = this->_arr[this->_head];
-        _INC_HEAD(this);
-        if (!Queue_empty(this)) {
-            this->len -= 1;
+        CANFrame ret = self->_arr[self->_head];
+        _INC_HEAD(self);
+        if (!Queue_empty(self)) {
+            self->len -= 1;
         }
         return ret;
     }
 }
 
-void Queue_print(Queue* this) {
+void Queue_print(Queue* self) {
     printf("[");
     for (size_t i = 0; i < (RX_BUFF_SIZE - 1); i++) {
-        printf("%ld, ", this->_arr[i].id);
+        printf("%ld, ", self->_arr[i].id);
     }
     printf(
         "%ld], head = %ld, tail = %ld, len = %d\n",
-        this->_arr[RX_BUFF_SIZE - 1].id, this->_arr[this->_head].id, this->_arr[this->_tail].id, this->len
+        self->_arr[RX_BUFF_SIZE - 1].id, self->_arr[self->_head].id, self->_arr[self->_tail].id, self->len
     );
 }
