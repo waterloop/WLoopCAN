@@ -59,7 +59,7 @@ Number of CAN filter banks
 #endif
 
 /*
-Fields present in this doc:
+Fields present in self doc:
     - https://docs.google.com/spreadsheets/d/18rGH__yyJPf3jil74yTlVyFFqCOyuNzP3DCFmmIWWbo/edit#gid=0
 */
 
