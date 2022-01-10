@@ -21,9 +21,9 @@ typedef struct {
 
 CANFrame CANFrame_init(uint32_t id);
 
-uint32_t CANFrame_get_field(CANFrame* this, Field field);
-int8_t CANFrame_set_field(CANFrame* this, Field field, uint32_t bytes);
+uint32_t CANFrame_get_field(CANFrame* self, Field field);
+int8_t CANFrame_set_field(CANFrame* self, Field field, uint32_t bytes);
 
-void CANFrame_print(CANFrame* this);
+void CANFrame_print(CANFrame* self);
 //////////////////////////////////////////////////////////////////////////
 
