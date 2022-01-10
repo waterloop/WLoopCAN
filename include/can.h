@@ -1,7 +1,7 @@
 #pragma once
 
 #ifdef __cplusplus
-extern "c" {
+extern "C" {
 #endif
 
 #include "../can/inc/can_frame.h"
