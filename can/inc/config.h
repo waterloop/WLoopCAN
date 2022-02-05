@@ -148,7 +148,7 @@ extern const Field MOTOR_CURRENT;
 extern const Field BATTERY_CURRENT;
 extern const Field BATTERY_VOLTAGE;
 
-#define MOTOR_CONTROLLER_STATE_CHANGE_ACK_NACK
+#define MOTOR_CONTROLLER_STATE_CHANGE_ACK_NACK 0x015U
 extern const Field STATE_ID_ACK_NACK;
 
 #endif
