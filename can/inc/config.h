@@ -90,6 +90,18 @@ extern const Field TARGET_POWER;
 extern const Field SET_TEMPERATURE_LIMIT;
 extern const Field SET_CURRENT_LIMIT;
 
+#define BUS_TEST_REQ 0x7FEU
+extern const Field DEVICE_ID;
+typedef enum {
+    RASPBERRY_PI = 0x00,
+    MASTER_BMS = 0x01,
+    MOTOR_CONTROLLER = 0x02,
+    TEMPERATURE_SENSOR = 0x03,
+    PRESSURE_SENSOR = 0x04,
+    RING_ENCODER = 0x05,
+    LV_POWER = 0x06
+} DeviceID; 
+
 #ifdef MASTER_BMS
 #define BMS_FAULT_REPORT 0x00A
 extern const Field BMS_SEVERITY_CODE;
