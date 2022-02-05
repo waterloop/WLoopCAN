@@ -102,6 +102,8 @@ typedef enum {
     LV_POWER = 0x06
 } DeviceID; 
 
+#define BUS_TEST_RESP 0x7FFU
+
 #ifdef MASTER_BMS
 #define BMS_FAULT_REPORT 0x00A
 extern const Field BMS_SEVERITY_CODE;
