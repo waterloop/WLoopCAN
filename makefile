@@ -9,6 +9,11 @@ master_bms:
 		BUILD_DIR=$(BUILD_DIR) \
 		BOARD_VARS="master_bms.mk"
 
+motor_controller:
+	make -f main.mk \
+		BUILD_DIR=$(BUILD_DIR) \
+		BOARD_VARS="motor_controller.mk"
+
 ring_encoder:
 	make -f main.mk \
 		BUILD_DIR=$(BUILD_DIR) \
