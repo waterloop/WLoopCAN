@@ -17,8 +17,6 @@ const Field TARGET_POWER            = {MANUAL_CONTROL_2, 0, 4};
 const Field SET_TEMPERATURE_LIMIT   = {MANUAL_CONTROL_3, 0, 4};
 const Field SET_CURRENT_LIMIT       = {MANUAL_CONTROL_3, 4, 8};
 
-const Field DEVICE_ID               = {BUS_TEST_REQ, 0, 1};
-
 #ifdef MASTER_BMS
     const Field BMS_SEVERITY_CODE           = {BMS_FAULT_REPORT, 0, 1};
     const Field BMS_ERROR_CODE              = {BMS_FAULT_REPORT, 1, 2};
