@@ -29,5 +29,11 @@ lv_power:
 		BUILD_DIR=$(BUILD_DIR) \
 		BOARD_VARS="lv_power.mk"
 
+pod_indicator_light:
+	make -f main.mk \
+		BUILD_DIR=$(BUILD_DIR) \
+		BOARD_VARS="pod_indicator_light.mk"
+
+
 clean:
 	rm -rf $(BUILD_DIR)

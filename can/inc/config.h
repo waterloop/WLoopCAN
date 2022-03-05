@@ -26,6 +26,10 @@
 #include "stm32f3xx_hal.h"
 #endif
 
+#ifdef POD_INDICATOR_LIGHT
+#include "stm32f0xx_hal.h"
+#endif
+
 /*
 Size of the Rx software fifo in bytes
 */
@@ -55,6 +59,10 @@ Number of CAN filter banks
 #endif
 
 #ifdef TEMP_SENSOR
+#define MAX_NUM_FILTER_BANKS    14
+#endif
+
+#ifdef POD_INDICATOR_LIGHT
 #define MAX_NUM_FILTER_BANKS    14
 #endif
 
