@@ -191,3 +191,12 @@ extern const Field CURRENT_24V;
 
 #ifdef TEMP_SENSOR
 #endif
+
+#ifdef POD_INDICATOR_LIGHT
+#define BMS_STATE_CHANGE_ACK_NACK 0x00BU
+extern const Field STATE_CHANGE_ACK_ID;
+extern const Field STATE_CHANGE_ACK;
+
+#define MOTOR_CONTROLLER_STATE_CHANGE_ACK_NACK 0x015U
+extern const Field STATE_ID_ACK_NACK;
+#endif

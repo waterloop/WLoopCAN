@@ -65,3 +65,9 @@ const Field SET_CURRENT_LIMIT       = {MANUAL_CONTROL_3, 4, 8};
 
 #ifdef TEMP_SENSOR
 #endif
+
+#ifdef POD_INDICATOR_LIGHT
+    const Field STATE_CHANGE_ACK_ID         = {BMS_STATE_CHANGE_ACK_NACK, 0, 1};
+    const Field STATE_CHANGE_ACK            = {BMS_STATE_CHANGE_ACK_NACK, 1, 2};
+    const Field MOTOR_CONTROLLER_STATE_ID_ACK_NACK  = {MOTOR_CONTROLLER_STATE_CHANGE_ACK_NACK, 0, 1};
+#endif
