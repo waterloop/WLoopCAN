@@ -194,9 +194,10 @@ extern const Field CURRENT_24V;
 
 #ifdef POD_INDICATOR_LIGHT
 #define BMS_STATE_CHANGE_ACK_NACK 0x00BU
-extern const Field STATE_CHANGE_ACK_ID;
-extern const Field STATE_CHANGE_ACK;
+extern const Field BMS_STATE_CHANGE_ACK_ID;
+extern const Field BMS_STATE_CHANGE_ACK;
 
 #define MOTOR_CONTROLLER_STATE_CHANGE_ACK_NACK 0x015U
-extern const Field STATE_ID_ACK_NACK;
+extern const Field MOTOR_CONTROLLER_STATE_CHANGE_ACK_ID;
+extern const Field MOTOR_CONTROLLER_STATE_CHANGE_ACK;
 #endif
