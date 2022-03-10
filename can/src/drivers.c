@@ -93,7 +93,7 @@ HAL_StatusTypeDef CANBus_init(CAN_HandleTypeDef* hcan, TIM_HandleTypeDef* htim) 
 }
 
 HAL_StatusTypeDef CANBus_subscribe(uint16_t msg) {
-    return CANBus_subscribe_mask(msg, 0xFFFF)
+    return CANBus_subscribe_mask(msg, 0xFFFF);
 }
 
 /**
