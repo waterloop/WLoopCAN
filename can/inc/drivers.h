@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 #include <stddef.h>
 #include "config.h"
 #include "circ_queue.h"
@@ -19,8 +20,10 @@ extern Queue RX_QUEUE;
 extern CAN_RxHeaderTypeDef RX_HDR;
 extern uint8_t RX_BUFF[8];
 
+extern uint8_t RELAY_HEARTBEAT_ERROR_FLAG;
 extern TIM_HandleTypeDef HEARTBEAT_TIMER;
-extern uint8_t RELAY_HEARTBEAT_COUNTER;
+uint8_t RELAY_HEARTBEAT_COUNTER;
+uint8_t RELAY_HEARTBEAT_RX;
 
 extern struct _filter_bank FILTER_BANK_MAP[MAX_NUM_FILTER_BANKS];
 ////////////////////////////////////////////////////////////////////////////////

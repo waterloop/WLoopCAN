@@ -5,6 +5,9 @@
 #include "config.h"
 #include "drivers.h"
 
+// Number of allowable missed hearbeats before an error flag occurrs
+#define MAX_HEARTBEAT_MEASURE 5
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 CAN_HandleTypeDef CAN_HANDLE;
 
@@ -22,7 +25,10 @@ Queue RX_QUEUE;
 CAN_RxHeaderTypeDef RX_HDR;
 uint8_t RX_BUFF[8];
 
+uint8_t RELAY_HEARTBEAT_ERROR_FLAG;
+TIM_HandleTypeDef HEARTBEAT_TIMER;
 uint8_t RELAY_HEARTBEAT_COUNTER;
+uint8_t RELAY_HEARTBEAT_RX;
 
 struct _filter_bank FILTER_BANK_MAP[MAX_NUM_FILTER_BANKS];
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -43,12 +49,21 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan) {
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
-
+    if (HEARTBEAT_TIMER == *htim) {
+        if (RELAY_HEARTBEAT_RX) {
+            RELAY_HEARTBEAT_COUNTER = 0;
+        } else {
+            RELAY_HEARTBEAT_COUNTER++;
+            if (RELAY_HEARTBEAT_COUNTER > MAX_HEARTBEAT_MEASURE) {
+                RELAY_HEARTBEAT_ERROR_FLAG = 1;
+            }
+        }
+    }
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
-HAL_StatusTypeDef CANBus_init(CAN_HandleTypeDef* hcan, TIM_HandleTypeDef*) {
+HAL_StatusTypeDef CANBus_init(CAN_HandleTypeDef* hcan, TIM_HandleTypeDef* htim) {
     // initialize global variables
     CAN_HANDLE = *hcan;
     RX_QUEUE = Queue_init();
@@ -65,6 +80,12 @@ HAL_StatusTypeDef CANBus_init(CAN_HandleTypeDef* hcan, TIM_HandleTypeDef*) {
 
     status = HAL_CAN_ActivateNotification(&CAN_HANDLE, CAN_IT_RX_FIFO0_MSG_PENDING);
     if (status != HAL_OK) { return status; }
+
+    // Initialize the RPi heartbeat monitoring
+    HEARTBEAT_ERROR = 0;
+    RELAY_HEARTBEAT_COUNTER = 0;
+
+    HEARTBEAT_TIMER = *htim
 
     return HAL_OK;
 }
