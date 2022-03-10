@@ -26,7 +26,7 @@ CAN_RxHeaderTypeDef RX_HDR;
 uint8_t RX_BUFF[8];
 
 uint8_t RELAY_HEARTBEAT_ERROR_FLAG;
-TIM_HandleTypeDef HEARTBEAT_TIMER;
+TIM_HandleTypeDef *HEARTBEAT_TIMER;
 uint8_t RELAY_HEARTBEAT_COUNTER;
 uint8_t RELAY_HEARTBEAT_RX;
 
@@ -49,7 +49,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan) {
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
-    if (HEARTBEAT_TIMER == *htim) {
+    if (HEARTBEAT_TIMER == htim) {
         if (RELAY_HEARTBEAT_RX) {
             RELAY_HEARTBEAT_COUNTER = 0;
             RELAY_HEARTBEAT_RX = 0;
@@ -83,16 +83,17 @@ HAL_StatusTypeDef CANBus_init(CAN_HandleTypeDef* hcan, TIM_HandleTypeDef* htim) 
     if (status != HAL_OK) { return status; }
 
     // Initialize the RPi heartbeat monitoring
-    HEARTBEAT_ERROR = 0;
+    RELAY_HEARTBEAT_ERROR_FLAG = 0;
     RELAY_HEARTBEAT_COUNTER = 0;
+    RELAY_HEARTBEAT_RX = 0;
 
-    HEARTBEAT_TIMER = *htim
+    HEARTBEAT_TIMER = htim;
 
     return HAL_OK;
 }
 
 HAL_StatusTypeDef CANBus_subscribe(uint16_t msg) {
-    CANBus_subscribe_mask(msg, 0xFFFF)
+    return CANBus_subscribe_mask(msg, 0xFFFF)
 }
 
 /**
