@@ -22,6 +22,8 @@ Queue RX_QUEUE;
 CAN_RxHeaderTypeDef RX_HDR;
 uint8_t RX_BUFF[8];
 
+uint8_t RELAY_HEARTBEAT_COUNTER;
+
 struct _filter_bank FILTER_BANK_MAP[MAX_NUM_FILTER_BANKS];
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -30,16 +32,23 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan) {
     if (HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &RX_HDR, RX_BUFF) != HAL_OK) {
         CANBus_error_handler();
     }
+    if (RX_HDR.StdId == STATE_CHANGE_REQ) {
+
+    }
     CANFrame rx_frame = CANFrame_init(RX_HDR.StdId);
     for (uint8_t i = 0; i < 8; i++) {
         rx_frame.pld[i] = RX_BUFF[i];
     }
     Queue_put(&RX_QUEUE, rx_frame);
 }
+
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
+
+}
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
-HAL_StatusTypeDef CANBus_init(CAN_HandleTypeDef* hcan) {
+HAL_StatusTypeDef CANBus_init(CAN_HandleTypeDef* hcan, TIM_HandleTypeDef*) {
     // initialize global variables
     CAN_HANDLE = *hcan;
     RX_QUEUE = Queue_init();
@@ -61,6 +70,14 @@ HAL_StatusTypeDef CANBus_init(CAN_HandleTypeDef* hcan) {
 }
 
 HAL_StatusTypeDef CANBus_subscribe(uint16_t msg) {
+    CANBus_subscribe_mask(msg, 0xFFFF)
+}
+
+/**
+  * @param msg: 11 bit CAN message id
+  * @param mask: 11 bit mask (1 for match 0 for dont care)
+  */
+HAL_StatusTypeDef CANBus_subscribe_mask(uint16_t msg, uint32_t mask) {
     // find the first unused filter
     int8_t bank_num = -1;
     for (uint8_t i = 0; i < MAX_NUM_FILTER_BANKS; i++) {
@@ -89,7 +106,7 @@ HAL_StatusTypeDef CANBus_subscribe(uint16_t msg) {
         .FilterIdHigh = std_id << 5,
         .FilterIdLow = 0,
 
-        .FilterMaskIdHigh = 0xffff << 5,
+        .FilterMaskIdHigh = mask << 5,
         .FilterMaskIdLow = 0
     };
     int8_t status = HAL_CAN_ConfigFilter(&CAN_HANDLE, &filter);
