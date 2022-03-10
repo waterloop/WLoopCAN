@@ -11,8 +11,8 @@ void input(char* msg, char* input_buff) {
     printf("\r\n");
 }
 
-void echo(CAN_HandleTypeDef* hcan) {
-    if (CANBus_init(hcan) != HAL_OK) { CANBus_error_handler(); }
+void echo(CAN_HandleTypeDef* hcan, TIM_HandleTypeDef* htim) {
+    if (CANBus_init(hcan, htim) != HAL_OK) { CANBus_error_handler(); }
     if (CANBus_subscribe_all() != HAL_OK) { CANBus_error_handler(); }
 
     hcan->Instance->MCR = 0x60;
