@@ -39,7 +39,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan) {
         CANBus_error_handler();
     }
     if (RX_HDR.StdId == STATE_CHANGE_REQ) {
-
+        RELAY_HEARTBEAT_RX = 1;
     }
     CANFrame rx_frame = CANFrame_init(RX_HDR.StdId);
     for (uint8_t i = 0; i < 8; i++) {
@@ -52,6 +52,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
     if (HEARTBEAT_TIMER == *htim) {
         if (RELAY_HEARTBEAT_RX) {
             RELAY_HEARTBEAT_COUNTER = 0;
+            RELAY_HEARTBEAT_RX = 0;
         } else {
             RELAY_HEARTBEAT_COUNTER++;
             if (RELAY_HEARTBEAT_COUNTER > MAX_HEARTBEAT_MEASURE) {
