@@ -26,6 +26,10 @@
 #include "stm32f3xx_hal.h"
 #endif
 
+#ifdef POD_INDICATOR_LIGHT
+#include "stm32f0xx_hal.h"
+#endif
+
 /*
 Size of the Rx software fifo in bytes
 */
@@ -55,6 +59,10 @@ Number of CAN filter banks
 #endif
 
 #ifdef TEMP_SENSOR
+#define MAX_NUM_FILTER_BANKS    14
+#endif
+
+#ifdef POD_INDICATOR_LIGHT
 #define MAX_NUM_FILTER_BANKS    14
 #endif
 
@@ -128,7 +136,8 @@ typedef enum {
     CELL_UNDERVOLTAGE_ERR = 0x04,
     CELL_OVERVOLTAGE_ERR = 0x05,
     CELL_TEMPERATURE_ERR = 0x06,
-    BUCK_TEMPERATURE_ERR = 0x07
+    BUCK_TEMPERATURE_ERR = 0x07,
+    LOW_LAYER_EXCEPTION = 0x08
 } BmsErrorCode;
 
 #define BMS_STATE_CHANGE_ACK_NACK 0x00BU
@@ -169,7 +178,7 @@ extern const Field MOTOR_CURRENT;
 extern const Field BATTERY_CURRENT;
 extern const Field BATTERY_VOLTAGE;
 
-#define MOTOR_CONTROLLER_STATE_CHANGE_ACK_NACK
+#define MOTOR_CONTROLLER_STATE_CHANGE_ACK_NACK 0x015U
 extern const Field STATE_ID_ACK_NACK;
 
 #endif
@@ -202,4 +211,14 @@ extern const Field CURRENT_24V;
 #endif
 
 #ifdef TEMP_SENSOR
+#endif
+
+#ifdef POD_INDICATOR_LIGHT
+#define BMS_STATE_CHANGE_ACK_NACK 0x00BU
+extern const Field BMS_STATE_CHANGE_ACK_ID;
+extern const Field BMS_STATE_CHANGE_ACK;
+
+#define MOTOR_CONTROLLER_STATE_CHANGE_ACK_NACK 0x015U
+extern const Field MOTOR_CONTROLLER_STATE_CHANGE_ACK_ID;
+extern const Field MOTOR_CONTROLLER_STATE_CHANGE_ACK;
 #endif
