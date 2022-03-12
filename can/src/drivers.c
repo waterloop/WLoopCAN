@@ -48,9 +48,6 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan) {
     if (HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &RX_HDR, RX_BUFF) != HAL_OK) {
         CANBus_error_handler();
     }
-    if (RX_HDR.StdId == STATE_CHANGE_REQ) {
-        RELAY_HEARTBEAT_COUNTER = 0;
-    } 
     // Bus test req
     if (~(RX_HDR.StdID | ~BUS_TEST_REQ_MASK) == 0) {
         BUS_TEST_TX_HDR.StdId = BUS_TEST_RESP_BASE | (RX_HDR.StdID - BUS_TEST_REQ_BASE);
@@ -60,6 +57,9 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan) {
             CANBus_error_handler();
         }
     } else {
+        if (RX_HDR.StdId == STATE_CHANGE_REQ) {
+            RELAY_HEARTBEAT_COUNTER = 0;
+        } 
         CANFrame rx_frame = CANFrame_init(RX_HDR.StdId);
         for (uint8_t i = 0; i < 8; i++) {
             rx_frame.pld[i] = RX_BUFF[i];
