@@ -37,7 +37,7 @@ extern struct _filter_bank FILTER_BANK_MAP[MAX_NUM_FILTER_BANKS];
 HAL_StatusTypeDef CANBus_init(CAN_HandleTypeDef* hcan, TIM_HandleTypeDef* htim);
 
 HAL_StatusTypeDef CANBus_subscribe(uint16_t msg);
-HAL_StatusTypeDef CANBus_subscribe_mask(uint16_t msg, uint32_t mask);
+HAL_StatusTypeDef CANBus_subscribe_mask(uint16_t msg, uint16_t mask);
 HAL_StatusTypeDef CANBus_unsubscribe(uint16_t msg);
 HAL_StatusTypeDef CANBus_subscribe_all();
 
