@@ -113,7 +113,7 @@ HAL_StatusTypeDef CANBus_subscribe(uint16_t msg) {
   * @param msg: 11 bit CAN message id
   * @param mask: 11 bit mask (1 for match 0 for dont care)
   */
-HAL_StatusTypeDef CANBus_subscribe_mask(uint16_t msg, uint32_t mask) {
+HAL_StatusTypeDef CANBus_subscribe_mask(uint16_t msg, uint16_t mask) {
     // find the first unused filter
     int8_t bank_num = -1;
     for (uint8_t i = 0; i < MAX_NUM_FILTER_BANKS; i++) {
