@@ -53,7 +53,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan) {
     } 
     // Bus test req
     if (~(RX_HDR.StdID | ~BUS_TEST_REQ_MASK) == 0) {
-        BUS_TEST_TX_HDR.StdId = frame->id;
+        BUS_TEST_TX_HDR.StdId = BUS_TEST_RESP_BASE | (RX_HDR.StdID - BUS_TEST_REQ_BASE);
         uint8_t payload[8] = {0};
 
         int8_t status = HAL_CAN_AddTxMessage(CAN_HANDLE, &BUS_TEST_TX_HDR, payload, &BUS_TEST_TX_MAILBOX);
