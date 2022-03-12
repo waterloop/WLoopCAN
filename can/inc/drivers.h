@@ -11,18 +11,25 @@ struct _filter_bank {
 };
 
 ////////////////////////////////////////////////////////////////////////////////
-extern CAN_HandleTypeDef CAN_HANDLE;
+extern CAN_HandleTypeDef *CAN_HANDLE;
+
+// General TX Header
 extern CAN_TxHeaderTypeDef TX_HDR;
 extern uint32_t TX_MAILBOX;
 
+// Bus Test TX Header
+extern CAN_TxHeaderTypeDef BUS_TEST_TX_HDR;
+extern uint32_t BUS_TEST_TX_MAILBOX;
+
+// Receive message Queue
 extern Queue RX_QUEUE;
 extern CAN_RxHeaderTypeDef RX_HDR;
 extern uint8_t RX_BUFF[8];
 
+// Relay board heartbeat monitoring
 extern uint8_t RELAY_HEARTBEAT_ERROR_FLAG;
 extern TIM_HandleTypeDef *HEARTBEAT_TIMER;
 uint8_t RELAY_HEARTBEAT_COUNTER;
-uint8_t RELAY_HEARTBEAT_RX;
 
 extern struct _filter_bank FILTER_BANK_MAP[MAX_NUM_FILTER_BANKS];
 ////////////////////////////////////////////////////////////////////////////////

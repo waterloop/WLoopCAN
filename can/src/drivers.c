@@ -9,7 +9,7 @@
 #define MAX_HEARTBEAT_MEASURE 5
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
-CAN_HandleTypeDef CAN_HANDLE;
+CAN_HandleTypeDef *CAN_HANDLE;
 
 CAN_TxHeaderTypeDef TX_HDR = {
     .StdId = 0x0000,                // not used
@@ -20,6 +20,16 @@ CAN_TxHeaderTypeDef TX_HDR = {
     .TransmitGlobalTime = DISABLE   // don't send timestamps
 };
 uint32_t TX_MAILBOX;
+
+CAN_TxHeaderTypeDef BUS_TEST_TX_HDR = {
+    .StdId = 0x0000,                // not used
+    .ExtId = 0x00000000,            // write correct arb_id before a frame is sent
+    .IDE = CAN_ID_STD,              // use 11 bit IDs
+    .RTR = CAN_RTR_DATA,            // send data frames
+    .DLC = 8,                       // send 8-byte payloads
+    .TransmitGlobalTime = DISABLE   // don't send timestamps
+};
+uint32_t BUS_TEST_TX_MAILBOX;
 
 Queue RX_QUEUE;
 CAN_RxHeaderTypeDef RX_HDR;
@@ -39,25 +49,28 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan) {
         CANBus_error_handler();
     }
     if (RX_HDR.StdId == STATE_CHANGE_REQ) {
-        RELAY_HEARTBEAT_RX = 1;
+        RELAY_HEARTBEAT_COUNTER = 0;
+    } 
+    // Bus test req
+    if (~(RX_HDR.StdID | ~BUS_TEST_REQ_MASK) == 0) {
+        BUS_TEST_TX_HDR.StdId = frame->id;
+        uint8_t payload[8] = {0};
+
+        int8_t status = HAL_CAN_AddTxMessage(CAN_HANDLE, &BUS_TEST_TX_HDR, payload, &BUS_TEST_TX_MAILBOX);
+    } else {
+        CANFrame rx_frame = CANFrame_init(RX_HDR.StdId);
+        for (uint8_t i = 0; i < 8; i++) {
+            rx_frame.pld[i] = RX_BUFF[i];
+        }
+        Queue_put(&RX_QUEUE, rx_frame);
     }
-    CANFrame rx_frame = CANFrame_init(RX_HDR.StdId);
-    for (uint8_t i = 0; i < 8; i++) {
-        rx_frame.pld[i] = RX_BUFF[i];
-    }
-    Queue_put(&RX_QUEUE, rx_frame);
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
     if (HEARTBEAT_TIMER == htim) {
-        if (RELAY_HEARTBEAT_RX) {
-            RELAY_HEARTBEAT_COUNTER = 0;
-            RELAY_HEARTBEAT_RX = 0;
-        } else {
-            RELAY_HEARTBEAT_COUNTER++;
-            if (RELAY_HEARTBEAT_COUNTER > MAX_HEARTBEAT_MEASURE) {
-                RELAY_HEARTBEAT_ERROR_FLAG = 1;
-            }
+        RELAY_HEARTBEAT_COUNTER++;
+        if (RELAY_HEARTBEAT_COUNTER > MAX_HEARTBEAT_MEASURE) {
+            RELAY_HEARTBEAT_ERROR_FLAG = 1;
         }
     }
 }
@@ -66,7 +79,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 HAL_StatusTypeDef CANBus_init(CAN_HandleTypeDef* hcan, TIM_HandleTypeDef* htim) {
     // initialize global variables
-    CAN_HANDLE = *hcan;
+    CAN_HANDLE = hcan;
     RX_QUEUE = Queue_init();
     for (uint8_t i = 0; i < MAX_NUM_FILTER_BANKS; i++) {
         FILTER_BANK_MAP[i].filter_typedef.FilterActivation = CAN_FILTER_DISABLE;
@@ -76,10 +89,10 @@ HAL_StatusTypeDef CANBus_init(CAN_HandleTypeDef* hcan, TIM_HandleTypeDef* htim) 
 
     // start the CAN peripheral
     int8_t status;
-    status = HAL_CAN_Start(&CAN_HANDLE);
+    status = HAL_CAN_Start(CAN_HANDLE);
     if (status != HAL_OK) { return status; }
 
-    status = HAL_CAN_ActivateNotification(&CAN_HANDLE, CAN_IT_RX_FIFO0_MSG_PENDING);
+    status = HAL_CAN_ActivateNotification(CAN_HANDLE, CAN_IT_RX_FIFO0_MSG_PENDING);
     if (status != HAL_OK) { return status; }
 
     // Initialize the RPi heartbeat monitoring
@@ -132,7 +145,7 @@ HAL_StatusTypeDef CANBus_subscribe_mask(uint16_t msg, uint32_t mask) {
         .FilterMaskIdHigh = mask << 5,
         .FilterMaskIdLow = 0
     };
-    int8_t status = HAL_CAN_ConfigFilter(&CAN_HANDLE, &filter);
+    int8_t status = HAL_CAN_ConfigFilter(CAN_HANDLE, &filter);
 
     if (status == HAL_OK) {
         FILTER_BANK_MAP[bank_num].filter_typedef = filter;
@@ -158,7 +171,7 @@ HAL_StatusTypeDef CANBus_unsubscribe(uint16_t msg) {
         .FilterActivation = CAN_FILTER_DISABLE,
         .FilterBank = bank_num,
     };
-    int8_t status = HAL_CAN_ConfigFilter(&CAN_HANDLE, &filter);
+    int8_t status = HAL_CAN_ConfigFilter(CAN_HANDLE, &filter);
 
     if (status == HAL_OK) {
         FILTER_BANK_MAP[bank_num].filter_typedef = filter;
@@ -195,7 +208,7 @@ HAL_StatusTypeDef CANBus_subscribe_all() {
         .FilterMaskIdHigh = 0,
         .FilterMaskIdLow = 0
     };
-    int8_t status = HAL_CAN_ConfigFilter(&CAN_HANDLE, &filter);
+    int8_t status = HAL_CAN_ConfigFilter(CAN_HANDLE, &filter);
 
     if (status == HAL_OK) {
         FILTER_BANK_MAP[bank_num].filter_typedef = filter;
@@ -208,8 +221,8 @@ HAL_StatusTypeDef CANBus_subscribe_all() {
 HAL_StatusTypeDef CANBus_put_frame(CANFrame* frame) {
     TX_HDR.StdId = frame->id;
 
-    int8_t status = HAL_CAN_AddTxMessage(&CAN_HANDLE, &TX_HDR, frame->pld, &TX_MAILBOX);
-    while (HAL_CAN_IsTxMessagePending(&CAN_HANDLE, TX_MAILBOX)) { asm("NOP"); }
+    int8_t status = HAL_CAN_AddTxMessage(CAN_HANDLE, &TX_HDR, frame->pld, &TX_MAILBOX);
+    while (HAL_CAN_IsTxMessagePending(CAN_HANDLE, TX_MAILBOX)) { asm("NOP"); }
     return status;
 }
 CANFrame CANBus_get_frame() {
