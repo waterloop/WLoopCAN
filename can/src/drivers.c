@@ -56,7 +56,9 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan) {
         BUS_TEST_TX_HDR.StdId = BUS_TEST_RESP_BASE | (RX_HDR.StdID - BUS_TEST_REQ_BASE);
         uint8_t payload[8] = {0};
 
-        int8_t status = HAL_CAN_AddTxMessage(CAN_HANDLE, &BUS_TEST_TX_HDR, payload, &BUS_TEST_TX_MAILBOX);
+        if(HAL_CAN_AddTxMessage(CAN_HANDLE, &BUS_TEST_TX_HDR, payload, &BUS_TEST_TX_MAILBOX) != HAL_OK) {
+            CANBus_error_handler();
+        }
     } else {
         CANFrame rx_frame = CANFrame_init(RX_HDR.StdId);
         for (uint8_t i = 0; i < 8; i++) {
