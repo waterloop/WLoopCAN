@@ -68,7 +68,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan) {
     }
 }
 
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
+void CANBus_timer_isr(TIM_HandleTypeDef* htim) {
     if (HEARTBEAT_TIMER == htim) {
         RELAY_HEARTBEAT_COUNTER++;
         if (RELAY_HEARTBEAT_COUNTER > MAX_HEARTBEAT_MEASURE) {
