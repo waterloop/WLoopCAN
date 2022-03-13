@@ -29,7 +29,7 @@ extern uint8_t RX_BUFF[8];
 // Relay board heartbeat monitoring
 extern uint8_t RELAY_HEARTBEAT_ERROR_FLAG;
 extern TIM_HandleTypeDef *HEARTBEAT_TIMER;
-uint8_t RELAY_HEARTBEAT_COUNTER;
+extern uint8_t RELAY_HEARTBEAT_COUNTER;
 
 extern struct _filter_bank FILTER_BANK_MAP[MAX_NUM_FILTER_BANKS];
 ////////////////////////////////////////////////////////////////////////////////
