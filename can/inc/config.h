@@ -200,6 +200,11 @@ extern const Field PRESSURE_LOW_1;
 
 #define PRESSURE_SENSOR_LOW_2 0x022U
 extern const Field PRESSURE_LOW_2;
+
+#define PRESSURE_SENSOR_STATE_CHANGE_ACK_NACK 0x023U
+extern const Field PRESSURE_SENSOR_STATE_CHANGE_ACK_ID;
+extern const Field PRESSURE_SENSOR_STATE_CHANGE_ACK;
+
 #endif
 
 #ifdef LV_POWER
