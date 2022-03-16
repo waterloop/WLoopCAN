@@ -67,6 +67,10 @@ const Field SET_CURRENT_LIMIT       = {MANUAL_CONTROL_3, 4, 8};
 #endif
 
 #ifdef TEMP_SENSOR
+    const Field TORCHIC_1_TEMP_1 = {TORCHIC_1, 0, 4};
+    const Field TORCHIC_1_TEMP_2 = {TORCHIC_1, 4, 8};
+    const Field TORCHIC_2_TEMP_1 = {TORCHIC_2, 0, 4};
+    const Field TORCHIC_2_TEMP_2 = {TORCHIC_2, 4, 8};
 #endif
 
 #ifdef POD_INDICATOR_LIGHT

@@ -219,6 +219,10 @@ extern const Field CURRENT_24V;
 #endif
 
 #ifdef TEMP_SENSOR
+#define TORCHIC_1 0x040U
+#define TORCHIC_2 0x041U
+extern const Field TEMP_1;
+extern const Field TEMP_2;
 #endif
 
 #ifdef POD_INDICATOR_LIGHT
