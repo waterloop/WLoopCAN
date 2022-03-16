@@ -1,0 +1,6 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/mnt/c/Users/guybl/Documents/Local Code Files/Waterloop/WLoopCAN'
+echo 'Error: no rule to build "all", must specify board (ex. make master_bms)'
+echo ""
+make: Leaving directory '/mnt/c/Users/guybl/Documents/Local Code Files/Waterloop/WLoopCAN'
+ 

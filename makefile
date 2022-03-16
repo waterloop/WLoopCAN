@@ -34,6 +34,10 @@ pod_indicator_light:
 		BUILD_DIR=$(BUILD_DIR) \
 		BOARD_VARS="pod_indicator_light.mk"
 
+temp_sensor:
+	make -f main.mk \
+		BUILD_DIR=$(BUILD_DIR) \
+		BOARD_VARS="temp_sensor.mk"
 
 clean:
 	rm -rf $(BUILD_DIR)
