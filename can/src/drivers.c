@@ -49,14 +49,15 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan) {
         CANBus_error_handler();
     }
     // Bus test req
-    if (~(RX_HDR.StdId | ~BUS_TEST_REQ_MASK) == 0) {
+    if (~(RX_HDR.StdId | ~BUS_TEST_MSK) == 0) {
         BUS_TEST_TX_HDR.StdId = BUS_TEST_RESP_BASE | (RX_HDR.StdId - BUS_TEST_REQ_BASE);
         uint8_t payload[8] = {0};
 
         if(HAL_CAN_AddTxMessage(CAN_HANDLE, &BUS_TEST_TX_HDR, payload, &BUS_TEST_TX_MAILBOX) != HAL_OK) {
             CANBus_error_handler();
         }
-    } else {
+    }
+    else {
         if (RX_HDR.StdId == STATE_CHANGE_REQ) {
             RELAY_HEARTBEAT_COUNTER = 0;
         } 
