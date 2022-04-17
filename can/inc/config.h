@@ -172,6 +172,20 @@ extern const Field MC_CAP_VOLTAGE;
 extern const Field MOTOR_CONTROLLER_SEVERITY_CODE;
 extern const Field MOTOR_CONTROLLER_ERROR_CODE;
 extern const Field MOTOR_CONTROLLER_PHASE_MASK;
+typedef enum {
+    PHASE_OVERVOLTAGE = 0x00,
+    PHASE_UNDERVOLTAGE = 0x01,
+    PHASE_OVERCURRENT = 0x02,
+    DC_CAP_OVERVOLTAGE = 0x03,
+    DC_CAP_UNDERVOLTAGE = 0x04,
+    PHASE_OVERTEMPERATURE = 0x05,
+    MOTOR_STALL = 0x06
+} MCErrorCode;
+typedef enum {
+    PHASE_A = 0b001U,
+    PHASE_B = 0b010U,
+    PHASE_C = 0b100U
+} PhaseMask;
 
 #define MOTOR_CONTROLLER_HEALTH_CHECK 0x002U
 extern const Field IGBT_TEMPERATURE;
