@@ -182,9 +182,9 @@ typedef enum {
     MOTOR_STALL = 0x06
 } MCErrorCode;
 typedef enum {
-    PHASE_A = 0b001U,
-    PHASE_B = 0b010U,
-    PHASE_C = 0b100U
+    PHASE_A_FAULT = 0b001U,
+    PHASE_B_FAULT = 0b010U,
+    PHASE_C_FAULT = 0b100U
 } PhaseMask;
 
 #define MOTOR_CONTROLLER_HEALTH_CHECK 0x002U
