@@ -48,7 +48,7 @@ const Field SET_CURRENT_LIMIT       = {MANUAL_CONTROL_3, 4, 8};
     const Field BATTERY_VOLTAGE                     = {MOTOR_CONTROLLER_DATA_2, 4, 8};
 #endif
 
-#ifdef RING_ENCODER
+#if defined(RING_ENCODER) || defined(MOTOR_CONTROLLER)
     const Field RE_POD_SPEED = {RING_ENCODER_DATA, 0, 4};
 #endif
 

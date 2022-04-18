@@ -209,7 +209,7 @@ extern const Field STATE_ID_ACK_NACK;
 
 #endif
 
-#ifdef RING_ENCODER
+#if (defined(RING_ENCODER) || defined(MOTOR_CONTROLLER))
 #define RING_ENCODER_DATA 0x01FU
 extern const Field RE_POD_SPEED;
 #endif
