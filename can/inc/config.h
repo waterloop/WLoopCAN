@@ -215,7 +215,7 @@ extern const Field PHASE_C_VOLTAGE;
 
 #define MOTOR_CONTROLLER_STATE_CHANGE_ACK_NACK 0x015U
 extern const Field STATE_CHANGE_ACK_ID;
-extern const Field STATE_ID_ACK_NACK;
+extern const Field STATE_CHANGE_ACK;
 
 #endif
 
