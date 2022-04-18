@@ -193,16 +193,16 @@ typedef enum {
 } PhaseMask;
 
 #define MOTOR_CONTROLLER_HEALTH_CHECK 0x002U
-extern const Field IGBT_TEMPERATURE;
+extern const Field FET_TEMPERATURE;
 extern const Field MOTOR_VOLTAGE;
 
 #define MOTOR_CONTROLLER_DATA_1 0x016U
 extern const Field MC_POD_SPEED;
-extern const Field MOTOR_CURRENT;
+extern const Field MC_POD_ACCELERATION;
 
 #define MOTOR_CONTROLLER_DATA_2 0x017U
-extern const Field BATTERY_CURRENT;
-extern const Field BATTERY_VOLTAGE;
+extern const Field AVG_PHASE_CURRENT;
+extern const Field AVG_PHASE_VOLTAGE;
 
 #define MOTOR_CONTROLLER_STATE_CHANGE_ACK_NACK 0x015U
 extern const Field STATE_ID_ACK_NACK;

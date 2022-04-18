@@ -40,15 +40,15 @@ const Field SET_CURRENT_LIMIT       = {MANUAL_CONTROL_3, 4, 8};
 
     const Field MOTOR_CONTROLLER_STATE_ID_ACK_NACK  = {MOTOR_CONTROLLER_STATE_CHANGE_ACK_NACK, 0, 1};
     
-    const Field IGBT_TEMPERATURE                    = {MOTOR_CONTROLLER_HEALTH_CHECK, 0, 4};
+    const Field FET_TEMPERATURE                     = {MOTOR_CONTROLLER_HEALTH_CHECK, 0, 4};
     const Field MOTOR_VOLTAGE                       = {MOTOR_CONTROLLER_HEALTH_CHECK, 4, 8};
     const Field MC_POD_SPEED                        = {MOTOR_CONTROLLER_DATA_1, 0, 4};
-    const Field MOTOR_CURRENT                       = {MOTOR_CONTROLLER_DATA_1, 4, 8};
-    const Field BATTERY_CURRENT                     = {MOTOR_CONTROLLER_DATA_2, 0, 4};
-    const Field BATTERY_VOLTAGE                     = {MOTOR_CONTROLLER_DATA_2, 4, 8};
+    const Field MC_POD_ACCELERATION                 = {MOTOR_CONTROLLER_DATA_1, 4, 8};
+    const Field AVG_PHASE_CURRENT                   = {MOTOR_CONTROLLER_DATA_2, 0, 4};
+    const Field AVG_PHASE_VOLTAGE                   = {MOTOR_CONTROLLER_DATA_2, 4, 8};
 #endif
 
-#if defined(RING_ENCODER) || defined(MOTOR_CONTROLLER)
+#if (defined(RING_ENCODER) || defined(MOTOR_CONTROLLER))
     const Field RE_POD_SPEED = {RING_ENCODER_DATA, 0, 4};
 #endif
 
