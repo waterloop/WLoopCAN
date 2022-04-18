@@ -224,9 +224,12 @@ extern const Field STATE_CHANGE_ACK;
 #endif
 
 #if (defined(RING_ENCODER) || defined(MOTOR_CONTROLLER))
-#define BUS_TEST_RESP RING_ENCODER_RESP
 #define RING_ENCODER_DATA 0x01FU
 extern const Field RE_POD_SPEED;
+#endif
+
+#ifdef RING_ENCODER
+#define BUS_TEST_RESP RING_ENCODER_RESP
 #endif
 
 #ifdef PRESSURE_SENSOR
