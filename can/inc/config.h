@@ -123,9 +123,12 @@ extern const Field SET_CURRENT_LIMIT;
 #define RING_ENCODER_RESP           BUS_TEST_RESP_BASE | 0x5U
 #define LV_POWER_RESP               BUS_TEST_RESP_BASE | 0x6U
 
-
+#ifdef DESKTOP
+#define BUS_TEST_RESP RASPBERRY_PI_RESP
+#endif
 
 #ifdef MASTER_BMS
+#define BUS_TEST_RESP MASTER_BMS_RESP
 #define BMS_FAULT_REPORT 0x00A
 extern const Field BMS_SEVERITY_CODE;
 extern const Field BMS_ERROR_CODE;
@@ -168,6 +171,7 @@ extern const Field MC_CAP_VOLTAGE;
 #endif
 
 #ifdef MOTOR_CONTROLLER
+#define BUS_TEST_RESP MOTOR_CONTROLLER_RESP  
 #define MOTOR_CONTROLLER_FAULT_REPORT 0x014
 extern const Field MOTOR_CONTROLLER_SEVERITY_CODE;
 extern const Field MOTOR_CONTROLLER_ERROR_CODE;
@@ -205,11 +209,13 @@ extern const Field STATE_ID_ACK_NACK;
 #endif
 
 #ifdef RING_ENCODER
+#define BUS_TEST_RESP RING_ENCODER_RESP
 #define RING_ENCODER_DATA 0x01FU
 extern const Field RE_POD_SPEED;
 #endif
 
 #ifdef PRESSURE_SENSOR
+#define BUS_TEST_RESP PRESSURE_SENSOR_RESP
 #define PRESSURE_SENSOR_HIGH 0x020U
 extern const Field PRESSURE_HIGH;
 
@@ -226,6 +232,7 @@ extern const Field PRESSURE_SENSOR_STATE_CHANGE_ACK;
 #endif
 
 #ifdef LV_POWER
+#define BUS_TEST_RESP LV_POWER_RESP
 #define CURRENT_5V_DATA 0x030U
 extern const Field CURRENT_5V;
 
@@ -237,6 +244,7 @@ extern const Field CURRENT_24V;
 #endif
 
 #ifdef TEMP_SENSOR
+#define BUS_TEST_RESP TEMPERATURE_SENSOR_RESP
 #define TORCHIC_1 0x040U
 #define TORCHIC_2 0x041U
 extern const Field TORCHIC_1_TEMP_1;
