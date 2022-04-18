@@ -42,10 +42,16 @@ const Field SET_CURRENT_LIMIT       = {MANUAL_CONTROL_3, 4, 8};
     
     const Field FET_TEMPERATURE                     = {MOTOR_CONTROLLER_HEALTH_CHECK, 0, 4};
     const Field MOTOR_VOLTAGE                       = {MOTOR_CONTROLLER_HEALTH_CHECK, 4, 8};
+
     const Field MC_POD_SPEED                        = {MOTOR_CONTROLLER_DATA_1, 0, 4};
     const Field MC_POD_ACCELERATION                 = {MOTOR_CONTROLLER_DATA_1, 4, 8};
-    const Field AVG_PHASE_CURRENT                   = {MOTOR_CONTROLLER_DATA_2, 0, 4};
-    const Field AVG_PHASE_VOLTAGE                   = {MOTOR_CONTROLLER_DATA_2, 4, 8};
+
+    const Field PHASE_A_CURRENT                     = {MOTOR_CONTROLLER_PHASE_A_STATS, 0, 4};
+    const Field PHASE_A_VOLTAGE                     = {MOTOR_CONTROLLER_PHASE_A_STATS, 4, 8};
+    const Field PHASE_B_CURRENT                     = {MOTOR_CONTROLLER_PHASE_B_STATS, 0, 4};
+    const Field PHASE_B_VOLTAGE                     = {MOTOR_CONTROLLER_PHASE_B_STATS, 4, 8};
+    const Field PHASE_C_CURRENT                     = {MOTOR_CONTROLLER_PHASE_C_STATS, 0, 4};
+    const Field PHASE_C_VOLTAGE                     = {MOTOR_CONTROLLER_PHASE_C_STATS, 4, 8};
 #endif
 
 #if (defined(RING_ENCODER) || defined(MOTOR_CONTROLLER))

@@ -200,9 +200,17 @@ extern const Field MOTOR_VOLTAGE;
 extern const Field MC_POD_SPEED;
 extern const Field MC_POD_ACCELERATION;
 
-#define MOTOR_CONTROLLER_DATA_2 0x017U
-extern const Field AVG_PHASE_CURRENT;
-extern const Field AVG_PHASE_VOLTAGE;
+#define MOTOR_CONTROLLER_PHASE_A_STATS 0x017U
+extern const Field PHASE_A_CURRENT;
+extern const Field PHASE_A_VOLTAGE;
+
+#define MOTOR_CONTROLLER_PHASE_B_STATS 0x018U
+extern const Field PHASE_B_CURRENT;
+extern const Field PHASE_B_VOLTAGE;
+
+#define MOTOR_CONTROLLER_PHASE_C_STATS 0x019U
+extern const Field PHASE_C_CURRENT;
+extern const Field PHASE_C_VOLTAGE;
 
 #define MOTOR_CONTROLLER_STATE_CHANGE_ACK_NACK 0x015U
 extern const Field STATE_ID_ACK_NACK;
