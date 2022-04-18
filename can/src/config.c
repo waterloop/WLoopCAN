@@ -8,6 +8,7 @@ Fields present in self doc:
 Start and stop indices (stop indices are +1 the actual index)
 */
 const Field STATE_ID                = {STATE_CHANGE_REQ, 0, 1};
+const Field TRACK_LENGTH            = {STATE_CHANGE_REQ, 1, 5};
 
 const Field TARGET_SPEED            = {MANUAL_CONTROL_1, 0, 4};
 const Field TARGET_FREQUENCY        = {MANUAL_CONTROL_1, 4, 8};

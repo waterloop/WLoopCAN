@@ -73,6 +73,7 @@ Fields present in self doc:
 
 #define STATE_CHANGE_REQ 0x000U
 extern const Field STATE_ID;
+extern const Field TRACK_LENGTH;
 typedef enum {
     RESTING = 0x00,
     LV_READY = 0x01,
