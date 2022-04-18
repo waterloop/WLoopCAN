@@ -173,6 +173,11 @@ extern const Field MOTOR_CONTROLLER_SEVERITY_CODE;
 extern const Field MOTOR_CONTROLLER_ERROR_CODE;
 extern const Field MOTOR_CONTROLLER_PHASE_MASK;
 typedef enum {
+    SEVERE = 0x00,
+    DANGER = 0x01,
+    WARNING = 0x02
+} MCSeverityCode;
+typedef enum {
     PHASE_OVERVOLTAGE = 0x00,
     PHASE_UNDERVOLTAGE = 0x01,
     PHASE_OVERCURRENT = 0x02,
