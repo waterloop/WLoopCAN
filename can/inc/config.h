@@ -73,6 +73,7 @@ Fields present in self doc:
 
 #define STATE_CHANGE_REQ 0x000U
 extern const Field STATE_ID;
+extern const Field TRACK_LENGTH;
 typedef enum {
     RESTING = 0x00,
     LV_READY = 0x01,
@@ -177,6 +178,11 @@ extern const Field MOTOR_CONTROLLER_SEVERITY_CODE;
 extern const Field MOTOR_CONTROLLER_ERROR_CODE;
 extern const Field MOTOR_CONTROLLER_PHASE_MASK;
 typedef enum {
+    SEVERE = 0x00,
+    DANGER = 0x01,
+    WARNING = 0x02
+} MCSeverityCode;
+typedef enum {
     PHASE_OVERVOLTAGE = 0x00,
     PHASE_UNDERVOLTAGE = 0x01,
     PHASE_OVERCURRENT = 0x02,
@@ -192,23 +198,32 @@ typedef enum {
 } PhaseMask;
 
 #define MOTOR_CONTROLLER_HEALTH_CHECK 0x002U
-extern const Field IGBT_TEMPERATURE;
+extern const Field FET_TEMPERATURE;
 extern const Field MOTOR_VOLTAGE;
 
 #define MOTOR_CONTROLLER_DATA_1 0x016U
 extern const Field MC_POD_SPEED;
-extern const Field MOTOR_CURRENT;
+extern const Field MC_POD_ACCELERATION;
 
-#define MOTOR_CONTROLLER_DATA_2 0x017U
-extern const Field BATTERY_CURRENT;
-extern const Field BATTERY_VOLTAGE;
+#define MOTOR_CONTROLLER_PHASE_A_STATS 0x017U
+extern const Field PHASE_A_CURRENT;
+extern const Field PHASE_A_VOLTAGE;
+
+#define MOTOR_CONTROLLER_PHASE_B_STATS 0x018U
+extern const Field PHASE_B_CURRENT;
+extern const Field PHASE_B_VOLTAGE;
+
+#define MOTOR_CONTROLLER_PHASE_C_STATS 0x019U
+extern const Field PHASE_C_CURRENT;
+extern const Field PHASE_C_VOLTAGE;
 
 #define MOTOR_CONTROLLER_STATE_CHANGE_ACK_NACK 0x015U
-extern const Field STATE_ID_ACK_NACK;
+extern const Field STATE_CHANGE_ACK_ID;
+extern const Field STATE_CHANGE_ACK;
 
 #endif
 
-#ifdef RING_ENCODER
+#if (defined(RING_ENCODER) || defined(MOTOR_CONTROLLER))
 #define BUS_TEST_RESP RING_ENCODER_RESP
 #define RING_ENCODER_DATA 0x01FU
 extern const Field RE_POD_SPEED;
